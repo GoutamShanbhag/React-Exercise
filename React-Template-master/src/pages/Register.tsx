@@ -1,16 +1,6 @@
 import AppLog from '../assets/Lejit.svg';
 import React, { useEffect, useState } from 'react';
-import {
-    Container,
-    Button,
-    TextField,
-    Link,
-    Box,
-    Grid,
-    Typography,
-    InputAdornment,
-    IconButton
-} from '@mui/material';
+import { Button, TextField, Link, Box, Grid, Typography } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
 
 interface SignUpInputObject {

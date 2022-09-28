@@ -1,5 +1,4 @@
 import { Components, Theme } from '@mui/material';
-import { fontSize, fontWeight, width } from '@mui/system';
 import { NEUTRAL } from '../palette';
 
 export const InputBase = (theme: Theme): Components => {
@@ -8,7 +7,11 @@ export const InputBase = (theme: Theme): Components => {
             styleOverrides: {
                 input: {
                     borderRadius: '4px',
-                    color: NEUTRAL.main
+                    color: NEUTRAL.main,
+                    fontSize: '14px',
+                    lineHeight: '24px',
+                    fontWeight: 400,
+                    letterSpacing: '0.3px'
                 }
             }
         },
@@ -21,7 +24,7 @@ export const InputBase = (theme: Theme): Components => {
                     lineHeight: '150%',
                     color: NEUTRAL.dark,
                     '&.Mui-focused': {
-                        color: 'red'
+                        // color: 'red'
                     }
                 },
                 shrink: {

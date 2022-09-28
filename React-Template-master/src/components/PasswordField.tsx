@@ -8,9 +8,7 @@ interface PasswordInput {
     setPassword: Function;
 }
 
-export const PasswordField = (props: PasswordInput): JSX.Element => {
-    const { password, setPassword } = props;
-
+export const PasswordField = ({ password, setPassword }: PasswordInput): JSX.Element => {
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const [iconVisibility, setIconVisibility] = useState(false);
 
@@ -20,6 +18,7 @@ export const PasswordField = (props: PasswordInput): JSX.Element => {
             setIconVisibility(true);
         }
     }, [password]);
+
     return (
         <TextField
             value={password}
@@ -46,7 +45,6 @@ export const PasswordField = (props: PasswordInput): JSX.Element => {
                 )
             }}
             fullWidth
-            name="password"
             label="Password"
             type={passwordVisibility ? 'text' : 'password'}
             id="password"

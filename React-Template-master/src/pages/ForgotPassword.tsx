@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, TextField, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 export const ForgotPassword = (): JSX.Element => {
     const [email, setEmail] = useState('');

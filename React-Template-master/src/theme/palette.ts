@@ -1,4 +1,9 @@
-import { alpha, PaletteColorOptions, PaletteOptions } from '@mui/material';
+import {
+    alpha,
+    PaletteColorOptions,
+    PaletteOptions,
+    SimplePaletteColorOptions
+} from '@mui/material';
 
 const GREY = {
     0: '#FFFFFF',
@@ -21,14 +26,14 @@ const GREY = {
     500_80: alpha('#919EAB', 0.8)
 };
 
-const PRIMARY: PaletteColorOptions = {
-    light: '#5BE584',
+export const PRIMARY: PaletteColorOptions = {
+    light: '#6A39F1',
     main: '#00AB55',
     dark: '#007B55',
     contrastText: '#fff'
 };
 
-const SECONDARY: PaletteColorOptions = {
+export const SECONDARY: PaletteColorOptions = {
     light: '#84A9FF',
     main: '#3366FF',
     dark: '#1939B7',
@@ -61,6 +66,11 @@ const ERROR: PaletteColorOptions = {
     contrastText: '#fff'
 };
 
+export const NEUTRAL: SimplePaletteColorOptions = {
+    dark: '#8E90A6',
+    light: '#E3E4EB',
+    main: '#28293D'
+};
 export const palette: PaletteOptions = {
     common: { black: '#000', white: '#fff' },
     primary: { ...PRIMARY },

@@ -20,7 +20,7 @@ function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg: numbe
     };
 }
 
-const FONT_PRIMARY = 'Public Sans, sans-serif';
+const FONT_PRIMARY = 'Inter';
 
 export const typography: TypographyOptions = {
     fontFamily: FONT_PRIMARY,

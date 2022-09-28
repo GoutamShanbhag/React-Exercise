@@ -1,0 +1,9 @@
+{
+    "pageNotFoundTitle": "Sorry, page not found!",
+    "pageNotFoundSubtitle": "Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be sure to check your spelling.",
+    "unauthorizedPageTitle": "Unauthorised, Access denied due to invalid credentials",
+    "unauthorizedPageSubTitle": "Your authorisation failed, Please try again.",
+    "serverErrorPageTitle": "Interal server error",
+    "serverErrorPageSubTitle": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
+    "goHomeButtonTitle": "Go to home"
+}

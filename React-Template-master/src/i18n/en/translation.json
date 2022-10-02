@@ -5,5 +5,9 @@
     "unauthorizedPageSubTitle": "Your authorisation failed, Please try again.",
     "serverErrorPageTitle": "Interal server error",
     "serverErrorPageSubTitle": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
-    "goHomeButtonTitle": "Go to home"
+    "goHomeButtonTitle": "Go to home",
+    "FirstName": "First Name",
+    "LastName": "Last Name",
+    "Email": "Email address",
+    "Password": "Password"
 }

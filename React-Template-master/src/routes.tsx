@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
-import { Login } from './pages/Login';
+import { SignIn } from './pages/SignIn';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { AuthLayout } from './layouts/AuthLayout';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { Page404 } from './pages/Page404';
 
 export function Router(): React.ReactElement | null {
     return useRoutes([
         {
-            path: '/dashboard',
-            element: <Dashboard />,
-            children: [{ path: '/dashboard', element: <Dashboard /> }]
-        },
-        {
             path: '/',
+            element: <Navigate to="/auth/register" />
+        },
+
+        {
+            path: '/auth',
+
             element: <AuthLayout />,
+
             children: [
-                { path: 'login', element: <Login /> },
-                { path: 'register', element: <Register /> },
-                { path: 'forgotpassword', element: <ForgotPassword /> },
-                { path: '/', element: <Navigate to="/dashboard" /> }
+                { path: '/auth/login', element: <SignIn /> },
+
+                { path: '/auth/register', element: <Register /> },
+
+                { path: '/auth/forgot-password', element: <ForgotPassword /> }
             ]
         },
-        { path: '*', element: <Navigate to="/404" replace /> }
+        {
+            path: '/*',
+            element: <Page404 />
+        }
     ]);
 }

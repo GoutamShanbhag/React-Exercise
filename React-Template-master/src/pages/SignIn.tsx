@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Button, TextField, Link, Box, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
-import { PRIMARY } from '../theme/palette';
+import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
+import { emailValidation } from '../components/EmailValidation';
 
-interface SignInInputObject {
+interface SignInFormValues {
     email: string;
     password: string;
 }
 
-const checkForEmptyInputs = (data: SignInInputObject): boolean => {
+const checkForEmptyInputs = (data: SignInFormValues): boolean => {
     const allValues = Object.values(data);
     for (const value of allValues) {
         if (value === '') return true;
@@ -17,22 +18,18 @@ const checkForEmptyInputs = (data: SignInInputObject): boolean => {
     return false;
 };
 
-export const Login = (): JSX.Element => {
+export const SignIn = (): JSX.Element => {
+    const theme = useTheme();
     const { t } = useTranslation();
     const [data, setData] = useState({
         email: '',
         password: ''
     });
-
-    const [signInButtonDisabled, setSignInButtonDisabled] = useState(true);
+    const [isValidEmail, setIsValidEmail] = useState(true);
 
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
-
-    useEffect(() => {
-        setSignInButtonDisabled(checkForEmptyInputs(data));
-    }, [data]);
 
     const handleSubmit = (event: React.FormEvent): void => {
         event.preventDefault();
@@ -43,12 +40,12 @@ export const Login = (): JSX.Element => {
     return (
         <Box>
             <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">Sign In</Typography>
+                <Typography variant="h1">{t('signIn')}</Typography>
                 <Typography
                     sx={{
                         mb: '40px'
                     }}>
-                    Sign in with your email
+                    {t('signInSubtitle')}
                 </Typography>
             </Box>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: '40px' }}>
@@ -57,31 +54,36 @@ export const Login = (): JSX.Element => {
                         <TextField
                             fullWidth
                             value={data.email}
-                            onChange={(e): void => setData({ ...data, email: e.target.value })}
-                            id="Email"
-                            label={t('Email')}
+                            onChange={async (e): Promise<void> => {
+                                setData({ ...data, email: e.target.value });
+                                setIsValidEmail(await emailValidation(e.target.value));
+                            }}
+                            id="email"
+                            label={t('email')}
                             type="email"
                             autoFocus
+                            error={!isValidEmail}
+                            helperText={!isValidEmail && t('invalidEmail')}
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>
                         <PasswordField
-                            label={t('Password')}
+                            label={t('password')}
                             password={data.password}
                             setPassword={setPassword}
                         />
                     </Grid>
                     <Grid item xs sx={{ display: 'flex', justifyContent: 'right' }}>
                         <Link
-                            href="/forgotpassword"
+                            href="/auth/forgot-password"
                             variant="body2"
                             sx={{ textDecoration: 'none' }}>
-                            <Typography variant="button">Forgot password?</Typography>
+                            <Typography variant="button">{t('forgotPassword')}</Typography>
                         </Link>
                     </Grid>
                 </Grid>
                 <Button
-                    disabled={signInButtonDisabled}
+                    disabled={!isValidEmail || checkForEmptyInputs(data)}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -89,17 +91,17 @@ export const Login = (): JSX.Element => {
                         mt: '40px',
                         mb: '16px'
                     }}>
-                    Sign In
+                    {t('signIn')}
                 </Button>
                 <Grid container justifyContent="center">
                     <Grid item>
-                        <Typography variant="body2">
-                            {"Don't have an account? "}
+                        <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
+                            {t('noAccount')}
                             <Link
                                 variant="body2"
-                                href="/register"
-                                sx={{ color: PRIMARY.light, textDecoration: 'none' }}>
-                                Sign Up
+                                href="/auth/register"
+                                sx={{ color: theme.palette.primary.light, textDecoration: 'none' }}>
+                                {t('signUp')}
                             </Link>
                         </Typography>
                     </Grid>

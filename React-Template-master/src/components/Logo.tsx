@@ -4,7 +4,7 @@ import AppLogo from '../assets/Lejit.svg';
 // ----------------------------------------------------------------------
 
 interface LogoProps {
-    sx: SxProps;
+    sx?: SxProps;
 }
 
 export function Logo(sx: LogoProps): JSX.Element {

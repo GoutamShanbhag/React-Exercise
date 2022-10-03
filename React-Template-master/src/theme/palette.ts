@@ -26,14 +26,14 @@ const GREY = {
     500_80: alpha('#919EAB', 0.8)
 };
 
-export const PRIMARY: SimplePaletteColorOptions = {
+const PRIMARY: PaletteColorOptions = {
     light: '#6A39F1',
     main: '#00AB55',
     dark: '#3E0EC3',
     contrastText: '#fff'
 };
 
-export const SECONDARY: PaletteColorOptions = {
+const SECONDARY: PaletteColorOptions = {
     light: '#84A9FF',
     main: '#3366FF',
     dark: '#1939B7',
@@ -72,7 +72,9 @@ export const BUTTONCOLORS: SimplePaletteColorOptions = {
     main: ''
 };
 
-export const NEUTRAL: SimplePaletteColorOptions = {
+export const NEUTRAL = {
+    default: '#555770',
+    darker: '#1C1C28',
     dark: '#8E90A6',
     light: '#EBEBF0',
     main: '#28293D',

@@ -6,8 +6,19 @@
     "serverErrorPageTitle": "Interal server error",
     "serverErrorPageSubTitle": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
     "goHomeButtonTitle": "Go to home",
-    "FirstName": "First Name",
-    "LastName": "Last Name",
-    "Email": "Email address",
-    "Password": "Password"
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email address",
+    "password": "Password",
+    "resetPasswordTitle": "Reset Your Password",
+    "forgotPasswordSubtitle": "Enter your email below for the reset link.",
+    "resetPassword": "Reset Password",
+    "invalidEmail": "Not a valid email address",
+    "noAccount": "Don't have an account ? ",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot password?",
+    "signInSubtitle": "Sign in with your email",
+    "haveAnAccount": "Already have an account ? ",
+    "signUpSubtitle": "Sign up with your email "
 }

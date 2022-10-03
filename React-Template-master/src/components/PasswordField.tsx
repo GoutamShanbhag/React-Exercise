@@ -1,6 +1,5 @@
-import { TextField, InputAdornment, IconButton } from '@mui/material';
+import { TextField, InputAdornment, IconButton, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { PRIMARY } from '../theme/palette';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -15,6 +14,8 @@ export const PasswordField = ({
     password,
     setPassword
 }: PasswordFieldProps): JSX.Element => {
+    const theme = useTheme();
+
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const [iconVisibility, setIconVisibility] = useState(false);
 
@@ -40,11 +41,13 @@ export const PasswordField = ({
                                 {passwordVisibility ? (
                                     <VisibilityIcon
                                         sx={{
-                                            color: PRIMARY.light
+                                            color: theme.palette.primary.light
                                         }}
                                     />
                                 ) : (
-                                    <VisibilityOffIcon sx={{ color: PRIMARY.light }} />
+                                    <VisibilityOffIcon
+                                        sx={{ color: theme.palette.primary.light }}
+                                    />
                                 )}
                             </IconButton>
                         )}

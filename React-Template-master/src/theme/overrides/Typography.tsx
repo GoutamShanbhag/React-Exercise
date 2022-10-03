@@ -12,7 +12,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                     fontSize: '16px',
                     lineHeight: '28px',
                     letterSpacing: '0.3px',
-                    color: theme.palette.primary.light
+                    color: NEUTRAL.default
                 },
 
                 h1: {
@@ -20,12 +20,11 @@ export const TypographyStyle = (theme: Theme): Components => {
                     fontSize: '34px',
                     lineHeight: '64px',
                     letterSpacing: '0.25px',
-                    color: '#1C1C28'
+                    color: NEUTRAL.darker
                 },
 
                 body2: {
                     height: '24px',
-                    fontStyle: 'normal',
                     fontWeight: 700,
                     fontSize: '14px',
                     lineHeight: '24px',
@@ -33,7 +32,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                 },
                 button: {
                     fontWeight: 700,
-                    color: '#6A39F1',
+                    color: theme.palette.primary.light,
                     fontSize: '14px',
                     lineHeight: '20px',
                     letterSpacing: '0.5px'
@@ -45,7 +44,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                     lineHeight: '20px',
                     letterSpacing: '0.1px',
                     textTransform: 'capitalize',
-                    color: '#555770'
+                    color: NEUTRAL.darker
                 }
             }
         }

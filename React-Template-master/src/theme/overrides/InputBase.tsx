@@ -22,10 +22,7 @@ export const InputBase = (theme: Theme): Components => {
                     fontWeight: 500,
                     fontSize: theme.typography.pxToRem(14),
                     lineHeight: '150%',
-                    color: NEUTRAL.dark,
-                    '&.Mui-focused': {
-                        // color: 'red'
-                    }
+                    color: NEUTRAL.dark
                 },
                 shrink: {
                     fontFamily: theme.typography.fontFamily,
@@ -63,7 +60,6 @@ export const InputBase = (theme: Theme): Components => {
         },
         MuiOutlinedInput: {
             styleOverrides: {
-                // root: { backgroundColor: theme.palette.primary.main },
                 notchedOutline: { border: '1px solid #000000' }
             }
         }

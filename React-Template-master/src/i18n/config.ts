@@ -11,6 +11,5 @@ i18n.use(initReactI18next).init({
 
 // Function to change lanugage
 export const changeLanguage = (language: string): void => {
-    console.log(language);
     i18n.changeLanguage(language);
 };

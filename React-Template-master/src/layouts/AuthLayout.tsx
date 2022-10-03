@@ -17,7 +17,7 @@ export const AuthLayout = (): JSX.Element => {
                             alignItems: 'left',
                             textAlign: 'left'
                         }}>
-                        <Logo sx={{}} />
+                        <Logo />
                         <Outlet />
                     </Box>
                 </Container>

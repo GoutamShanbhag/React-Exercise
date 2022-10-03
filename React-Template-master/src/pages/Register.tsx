@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Button, TextField, Link, Box, Grid, Typography } from '@mui/material';
+import { Button, TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PasswordField } from '../components/PasswordField';
+import { emailValidation } from '../components/EmailValidation';
+import { NEUTRAL } from '../theme/palette';
 
-interface SignUpInputObject {
+interface SignUpFormValues {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
 }
 
-const checkForEmptyInputs = (data: SignUpInputObject): boolean => {
+const checkForEmptyInputs = (data: SignUpFormValues): boolean => {
     const allValues = Object.values(data);
     for (const value of allValues) {
         if (value === '') return true;
@@ -20,7 +22,7 @@ const checkForEmptyInputs = (data: SignUpInputObject): boolean => {
 
 export const Register = (): JSX.Element => {
     const { t } = useTranslation();
-
+    const theme = useTheme();
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
@@ -32,28 +34,23 @@ export const Register = (): JSX.Element => {
         setData({ ...data, password });
     };
 
-    // signUpButtonDisabled is used to disable sing up button if input fields are empty.
-    const [signUpButtonDisabled, setSignUpButtonDisabled] = useState(true);
-
-    useEffect(() => {
-        const state = checkForEmptyInputs(data);
-        setSignUpButtonDisabled(state);
-    }, [data]);
+    const [isValidEmail, setIsValidEmail] = useState(true);
 
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         //TODO: Register the user and add all the data into firestore
     };
+    console.log(isValidEmail);
 
     return (
         <Box>
             <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">Sign up</Typography>
+                <Typography variant="h1">{t('signUp')}</Typography>
                 <Typography
                     sx={{
                         mb: '40px'
                     }}>
-                    Sign up with your email
+                    {t('signUpSubtitle')}
                 </Typography>
             </Box>
             <Box
@@ -68,8 +65,9 @@ export const Register = (): JSX.Element => {
                             onChange={(e): void => {
                                 setData({ ...data, firstName: e.target.value });
                             }}
+                            id="firstName"
                             fullWidth
-                            label={t('FirstName')}
+                            label={t('firstName')}
                             autoFocus
                         />
                     </Grid>
@@ -80,30 +78,35 @@ export const Register = (): JSX.Element => {
                                 setData({ ...data, lastName: e.target.value });
                             }}
                             fullWidth
-                            label={t('LastName')}
+                            id="lastName"
+                            label={t('lastName')}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
                             value={data.email}
-                            onChange={(e): void => {
+                            error={!isValidEmail}
+                            onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
+                                setIsValidEmail(await emailValidation(e.target.value));
                             }}
                             fullWidth
+                            id="email"
                             type="email"
-                            label={t('Email')}
+                            label={t('email')}
+                            helperText={!isValidEmail && t('invalidEmail')}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <PasswordField
-                            label={t('Password')}
+                            label={t('password')}
                             password={data.password}
                             setPassword={setPassword}
                         />
                     </Grid>
                 </Grid>
                 <Button
-                    disabled={signUpButtonDisabled}
+                    disabled={!isValidEmail || checkForEmptyInputs(data)}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -111,17 +114,17 @@ export const Register = (): JSX.Element => {
                         mt: '40px',
                         mb: '16px'
                     }}>
-                    Sign Up
+                    {t('signUp')}
                 </Button>
                 <Grid container justifyContent="center">
                     <Grid item>
-                        <Typography variant="body2">
-                            {'Already have an account? '}
+                        <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
+                            {t('haveAnAccount')}
                             <Link
                                 variant="body2"
-                                href="/login"
-                                sx={{ color: '#6A39F1', textDecoration: 'none' }}>
-                                Sign In
+                                href="/auth/login"
+                                sx={{ color: theme.palette.primary.light, textDecoration: 'none' }}>
+                                {t('signIn')}
                             </Link>
                         </Typography>
                     </Grid>

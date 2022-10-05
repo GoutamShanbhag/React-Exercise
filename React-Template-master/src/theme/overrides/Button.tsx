@@ -6,20 +6,28 @@ export const ButtonStyle = (theme: Theme): Components => {
         MuiButton: {
             styleOverrides: {
                 root: {
+                    boxShadow: 'none',
+                    fontFamily: 'Inter',
+                    letterSpacing: '0.5px',
+                    fontWeight: 700,
+                    height: '48px',
                     '&:disabled': {
                         color: NEUTRAL.dark,
                         backgroundColor: NEUTRAL.light
                     }
                 },
                 contained: {
-                    boxShadow: 'none',
-                    height: '48px',
-                    fontFamily: 'Inter',
-                    fontWeight: 700,
                     fontSize: '16px',
                     lineHeight: '24px',
-                    letterSpacing: '0.5px',
                     backgroundColor: theme.palette.primary.dark
+                },
+                outlined: {
+                    border: `1px solid ${theme.palette.primary.dark}`,
+                    width: '360px',
+                    color: theme.palette.primary.dark,
+                    '&:hover': {
+                        border: `1px solid ${theme.palette.primary.dark}`
+                    }
                 }
             }
         }

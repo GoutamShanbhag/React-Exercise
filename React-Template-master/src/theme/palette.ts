@@ -66,10 +66,8 @@ const ERROR: PaletteColorOptions = {
     contrastText: '#fff'
 };
 
-export const BUTTONCOLORS: SimplePaletteColorOptions = {
-    light: '#EBEBF0',
-    dark: '#3E0EC3',
-    main: ''
+export const WHITE = {
+    main: '#FFFFFF'
 };
 
 export const NEUTRAL = {
@@ -79,6 +77,11 @@ export const NEUTRAL = {
     light: '#EBEBF0',
     main: '#28293D',
     contrastText: '#fff'
+};
+
+export const PURPLE = {
+    lighter: '#FFE5FF',
+    dark: '#6600CC'
 };
 export const palette: PaletteOptions = {
     common: { black: '#000', white: '#fff' },

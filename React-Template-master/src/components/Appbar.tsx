@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Logo } from '../components/Logo';
 import { useTranslation } from 'react-i18next';
-import { changeLanguage } from '../i18n/config';
+import { changeLanguage, SupportedLanguage } from '../i18n/config';
 import { NEUTRAL, PURPLE, WHITE } from '../theme/palette';
 import france from '../france.png';
 import english from '../english.png';
@@ -20,7 +20,6 @@ import {
     useTheme
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-
 //-----------------------------------------------------
 
 const NavButtons = styled(Button)(({ theme }) => ({
@@ -32,16 +31,27 @@ const NavButtons = styled(Button)(({ theme }) => ({
     whiteSpace: 'nowrap',
     color: theme.palette.primary.dark
 }));
+const languageItems: {
+    languageName: string;
+    image: string;
+    languageCode: SupportedLanguage;
+}[] = [
+    { languageName: 'English', image: english, languageCode: 'en' },
+    { languageName: 'France', image: france, languageCode: 'fr' }
+];
 
+const navbarTitles: { title: string; path: string }[] = [
+    { title: 'dashboard', path: '/dashboard/change-password' },
+    { title: 'users', path: '/dashboard/users' },
+    { title: 'myProfile', path: '/dashboard/my-profile' }
+];
 //------------------------------------------------------
 
 export const Appbar = (): JSX.Element => {
     const [language, setLanguage] = useState('en');
     const { t } = useTranslation();
-    const lanuageItems = [
-        { languageName: 'English', image: english, languageCode: 'en' },
-        { languageName: 'France', image: france, languageCode: 'fr' }
-    ].map((item): JSX.Element => {
+
+    const allLanguages = languageItems.map((item): JSX.Element => {
         return (
             <MenuItem
                 key={item.languageCode}
@@ -63,11 +73,7 @@ export const Appbar = (): JSX.Element => {
             </MenuItem>
         );
     });
-    const navItems = [
-        { title: 'dashboard', path: '/dashboard/change-password' },
-        { title: 'users', path: '/dashboard/users' },
-        { title: 'myProfile', path: '/dashboard/my-profile' }
-    ].map((item): JSX.Element => {
+    const navItems = navbarTitles.map((item): JSX.Element => {
         return (
             <Link key={item.title} to={item.path} style={{ textDecoration: 'none' }}>
                 <NavButtons>{t(item.title)}</NavButtons>
@@ -164,7 +170,7 @@ export const Appbar = (): JSX.Element => {
                                 ml: '24px',
                                 mr: '88.25px'
                             }}>
-                            {lanuageItems}
+                            {allLanguages}
                         </Select>
                     </Box>
                 </Toolbar>

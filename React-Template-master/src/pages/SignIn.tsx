@@ -4,6 +4,7 @@ import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 import { emailValidation } from '../components/EmailValidation';
+import { MessageModal } from '../components/MessageModal';
 
 interface SignInFormValues {
     email: string;
@@ -18,9 +19,16 @@ const checkForEmptyInputs = (data: SignInFormValues): boolean => {
     return false;
 };
 
+const MODAL_CONTENT = {
+    title: 'signInFail',
+    subtitle: 'signInFailSubtitle',
+    type: 'warning'
+};
+
 export const SignIn = (): JSX.Element => {
     const theme = useTheme();
     const { t } = useTranslation();
+    const [open, setOpen] = useState(false);
     const [data, setData] = useState({
         email: '',
         password: ''
@@ -34,6 +42,8 @@ export const SignIn = (): JSX.Element => {
     const handleSubmit = (event: React.FormEvent): void => {
         event.preventDefault();
         //TODO: Add firebase function to sign in and direct the page to dashboard
+        setOpen(true);
+
         return;
     };
 
@@ -107,6 +117,7 @@ export const SignIn = (): JSX.Element => {
                     </Grid>
                 </Grid>
             </Box>
+            <MessageModal open={open} setOpen={setOpen} modalContent={MODAL_CONTENT} />
         </Box>
     );
 };

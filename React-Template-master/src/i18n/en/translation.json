@@ -29,5 +29,11 @@
     "changePasswordSubtitle": "Enter you old and new passwords in the fields below to change the password",
     "requiredField": "*Required fields",
     "newPassword": "New password",
-    "confirmPassword": "Confirm new password"
+    "confirmPassword": "Confirm new password",
+    "signUpSuccess": "Sign Up Successful",
+    "signUpSuccessSubtitle": "You have signed up successfully, we have a sent you a mail with the verifcation link.",
+    "okay": "Okay",
+    "signInFail": "Invalid Password",
+    "signInFailSubtitle": "The password you entered seems to be incorrect, please try again.",
+    "tryAgain": "Try Again"
 }

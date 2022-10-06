@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { PasswordField } from '../components/PasswordField';
 import { emailValidation } from '../components/EmailValidation';
 import { NEUTRAL } from '../theme/palette';
+import { MessageModal } from '../components/MessageModal';
 
 interface SignUpFormValues {
     firstName: string;
@@ -20,6 +21,12 @@ const checkForEmptyInputs = (data: SignUpFormValues): boolean => {
     return false;
 };
 
+const MODAL_CONTENT = {
+    title: 'signUpSuccess',
+    subtitle: 'signUpSuccessSubtitle',
+    type: 'correct'
+};
+
 export const Register = (): JSX.Element => {
     const { t } = useTranslation();
     const theme = useTheme();
@@ -29,7 +36,7 @@ export const Register = (): JSX.Element => {
         email: '',
         password: ''
     });
-
+    const [open, setOpen] = useState(false);
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
@@ -39,8 +46,9 @@ export const Register = (): JSX.Element => {
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         //TODO: Register the user and add all the data into firestore
+
+        setOpen(true);
     };
-    console.log(isValidEmail);
 
     return (
         <Box>
@@ -130,6 +138,7 @@ export const Register = (): JSX.Element => {
                     </Grid>
                 </Grid>
             </Box>
+            <MessageModal open={open} setOpen={setOpen} modalContent={MODAL_CONTENT} />
         </Box>
     );
 };

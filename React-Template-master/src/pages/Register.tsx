@@ -40,7 +40,6 @@ export const Register = (): JSX.Element => {
         event.preventDefault();
         //TODO: Register the user and add all the data into firestore
     };
-    console.log(isValidEmail);
 
     return (
         <Box>

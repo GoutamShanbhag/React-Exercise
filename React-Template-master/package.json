@@ -5,7 +5,9 @@
     "dependencies": {
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
+        "@material-ui/types": "^5.1.0",
         "@mui/icons-material": "^5.2.5",
+        "@mui/lab": "^5.0.0-alpha.101",
         "@mui/material": "^5.2.6",
         "@testing-library/jest-dom": "^5.16.1",
         "@testing-library/react": "^12.1.2",
@@ -14,6 +16,7 @@
         "@types/node": "^16.11.17",
         "@types/react": "^17.0.38",
         "@types/react-dom": "^17.0.11",
+        "firebase": "^9.10.0",
         "i18next": "^21.6.4",
         "lodash": "^4.17.21",
         "react": "^17.0.2",
@@ -36,7 +39,8 @@
         "workbox-range-requests": "^6.4.2",
         "workbox-routing": "^6.4.2",
         "workbox-strategies": "^6.4.2",
-        "workbox-streams": "^6.4.2"
+        "workbox-streams": "^6.4.2",
+        "yup": "^0.32.11"
     },
     "scripts": {
         "start": "react-scripts start",

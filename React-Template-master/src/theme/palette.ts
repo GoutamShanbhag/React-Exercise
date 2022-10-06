@@ -1,4 +1,9 @@
-import { alpha, PaletteColorOptions, PaletteOptions } from '@mui/material';
+import {
+    alpha,
+    PaletteColorOptions,
+    PaletteOptions,
+    SimplePaletteColorOptions
+} from '@mui/material';
 
 const GREY = {
     0: '#FFFFFF',
@@ -22,9 +27,9 @@ const GREY = {
 };
 
 const PRIMARY: PaletteColorOptions = {
-    light: '#5BE584',
+    light: '#6A39F1',
     main: '#00AB55',
-    dark: '#007B55',
+    dark: '#3E0EC3',
     contrastText: '#fff'
 };
 
@@ -61,6 +66,20 @@ const ERROR: PaletteColorOptions = {
     contrastText: '#fff'
 };
 
+export const BUTTONCOLORS: SimplePaletteColorOptions = {
+    light: '#EBEBF0',
+    dark: '#3E0EC3',
+    main: ''
+};
+
+export const NEUTRAL = {
+    default: '#555770',
+    darker: '#1C1C28',
+    dark: '#8E90A6',
+    light: '#EBEBF0',
+    main: '#28293D',
+    contrastText: '#fff'
+};
 export const palette: PaletteOptions = {
     common: { black: '#000', white: '#fff' },
     primary: { ...PRIMARY },

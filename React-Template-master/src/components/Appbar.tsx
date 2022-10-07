@@ -16,8 +16,7 @@ import {
     Avatar,
     Select,
     styled,
-    MenuItem,
-    useTheme
+    MenuItem
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 //-----------------------------------------------------
@@ -94,7 +93,8 @@ export const Appbar = (): JSX.Element => {
                         sx={{
                             ml: '80px',
                             mt: '33px',
-                            mb: '33.4px'
+                            mb: '33.4px',
+                            width: '30%'
                         }}>
                         <Logo
                             sx={{
@@ -103,53 +103,53 @@ export const Appbar = (): JSX.Element => {
                             }}
                         />
                     </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            minWidth: '400px'
+                        }}>
+                        {navItems}
+                    </Box>
 
                     <Box
                         sx={{
+                            width: '25%',
+                            justifyContent: 'space-around',
+                            mr: '86px',
                             display: 'flex',
                             alignItems: 'center'
                         }}>
                         <Box
                             sx={{
                                 display: 'flex',
-                                justifyContent: 'space-between',
-                                minWidth: '400px',
-                                mr: '10px'
+                                width: '40%',
+                                alignItems: 'center'
                             }}>
-                            {navItems}
-                        </Box>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', width: '30%' }}>
                             <Tooltip title="Current User">
-                                <IconButton sx={{ color: PURPLE.lighter }}>
-                                    <Avatar
-                                        sx={{
-                                            width: '48px',
-                                            height: '48px',
-                                            backgroundColor: PURPLE.lighter
-                                        }}>
-                                        <Typography variant="body2" sx={{ color: PURPLE.dark }}>
-                                            RS
-                                        </Typography>
-                                    </Avatar>
-                                </IconButton>
+                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                    <IconButton sx={{ color: PURPLE.lighter }}>
+                                        <Avatar
+                                            sx={{
+                                                width: '48px',
+                                                height: '48px',
+                                                backgroundColor: PURPLE.lighter
+                                            }}>
+                                            <Typography variant="body2" sx={{ color: PURPLE.dark }}>
+                                                RS
+                                            </Typography>
+                                        </Avatar>
+                                    </IconButton>
+
+                                    <Typography variant="body2">Rohit Sharma</Typography>
+                                </Box>
                             </Tooltip>
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    whiteSpace: 'nowrap',
-                                    ml: '8px',
-                                    mr: '24px'
-                                }}>
-                                Rohit Sharma
-                            </Typography>
                         </Box>
                         <Box
                             sx={{
                                 width: '0px',
                                 height: '24px',
-                                border: `1px solid ${NEUTRAL.dark}`,
-                                mr: '24px'
+                                border: `1px solid ${NEUTRAL.dark}`
                             }}
                         />
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -163,13 +163,7 @@ export const Appbar = (): JSX.Element => {
                                 {language === 'en' ? 'EN' : 'FR'}
                             </Typography>
                         </Box>
-                        <Select
-                            variant="standard"
-                            disableUnderline
-                            sx={{
-                                ml: '24px',
-                                mr: '88.25px'
-                            }}>
+                        <Select variant="standard" disableUnderline>
                             {allLanguages}
                         </Select>
                     </Box>

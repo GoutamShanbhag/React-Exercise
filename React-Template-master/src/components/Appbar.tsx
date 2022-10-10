@@ -127,24 +127,26 @@ export const Appbar = (): JSX.Element => {
                                 width: '40%',
                                 alignItems: 'center'
                             }}>
-                            <Tooltip title="Current User">
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <IconButton sx={{ color: PURPLE.lighter }}>
-                                        <Avatar
-                                            sx={{
-                                                width: '48px',
-                                                height: '48px',
-                                                backgroundColor: PURPLE.lighter
-                                            }}>
-                                            <Typography variant="body2" sx={{ color: PURPLE.dark }}>
-                                                RS
-                                            </Typography>
-                                        </Avatar>
-                                    </IconButton>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <IconButton sx={{ color: PURPLE.lighter }}>
+                                    <Avatar
+                                        sx={{
+                                            width: '48px',
+                                            height: '48px',
+                                            backgroundColor: PURPLE.lighter
+                                        }}>
+                                        <Typography variant="body2" sx={{ color: PURPLE.dark }}>
+                                            {/* TODO : Take data from firestore  */}
+                                            RS
+                                        </Typography>
+                                    </Avatar>
+                                </IconButton>
 
-                                    <Typography variant="body2">Rohit Sharma</Typography>
-                                </Box>
-                            </Tooltip>
+                                <Typography variant="body2">
+                                    {/* TODO : Take data from firestore */}
+                                    Rohit Sharma
+                                </Typography>
+                            </Box>
                         </Box>
                         <Box
                             sx={{

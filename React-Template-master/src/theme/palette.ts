@@ -66,10 +66,6 @@ const ERROR: PaletteColorOptions = {
     contrastText: '#fff'
 };
 
-export const WHITE = {
-    main: '#FFFFFF'
-};
-
 export const NEUTRAL = {
     default: '#555770',
     darker: '#1C1C28',

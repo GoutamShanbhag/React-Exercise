@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Logo } from '../components/Logo';
 import { useTranslation } from 'react-i18next';
 import { changeLanguage, SupportedLanguage } from '../i18n/config';
-import { NEUTRAL, PURPLE, WHITE } from '../theme/palette';
+import { NEUTRAL, PURPLE } from '../theme/palette';
 import france from '../france.png';
 import english from '../english.png';
 import {
@@ -16,7 +16,8 @@ import {
     Avatar,
     Select,
     styled,
-    MenuItem
+    MenuItem,
+    useTheme
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 //-----------------------------------------------------
@@ -49,7 +50,7 @@ const navbarTitles: { title: string; path: string }[] = [
 export const Appbar = (): JSX.Element => {
     const [language, setLanguage] = useState('en');
     const { t } = useTranslation();
-
+    const theme = useTheme();
     const allLanguages = languageItems.map((item): JSX.Element => {
         return (
             <MenuItem
@@ -85,7 +86,7 @@ export const Appbar = (): JSX.Element => {
                 component="nav"
                 sx={{
                     display: 'flex',
-                    backgroundColor: WHITE.main,
+                    backgroundColor: theme.palette.common.white,
                     width: '100%'
                 }}>
                 <Toolbar sx={{ justifyContent: 'space-between' }}>

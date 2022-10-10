@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Grid, Box, TextField, useTheme, Typography, Button } from '@mui/material';
-import { NEUTRAL, WHITE } from '../theme/palette';
+import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 
 const style = {
@@ -11,7 +11,6 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: '408px',
     height: '430px',
-    bgcolor: WHITE.main,
     boxShadow: 24,
     p: '20px'
 };
@@ -24,6 +23,7 @@ interface ChangePasswordModalProps {
 export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Element => {
     const { open, setOpen } = props;
     const { t } = useTranslation();
+    const theme = useTheme();
     return (
         <Box>
             <Modal
@@ -31,7 +31,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                 onClose={(): void => {
                     setOpen(false);
                 }}>
-                <Box sx={style}>
+                <Box sx={{ ...style, backgroundColor: theme.palette.common.white }}>
                     <Typography
                         variant="subtitle1"
                         sx={{

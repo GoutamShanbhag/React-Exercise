@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Button, TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Link, Box, Grid, Typography, useTheme, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PasswordField } from '../components/PasswordField';
 import { emailValidation } from '../components/EmailValidation';
 import { NEUTRAL } from '../theme/palette';
 import { MessageModal } from '../components/MessageModal';
+import { AuthError, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { auth, db } from '../components/Firebase';
+import { setDoc, doc } from 'firebase/firestore';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { getError } from '../components/ErrorHandling';
 
 interface SignUpFormValues {
     firstName: string;
@@ -24,7 +29,8 @@ const checkForEmptyInputs = (data: SignUpFormValues): boolean => {
 const MODAL_CONTENT = {
     title: 'signUpSuccess',
     subtitle: 'signUpSuccessSubtitle',
-    type: 'correct'
+    type: 'correct',
+    buttonText: 'okay'
 };
 
 export const Register = (): JSX.Element => {
@@ -37,17 +43,41 @@ export const Register = (): JSX.Element => {
         password: ''
     });
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [{ isError, errorMessage }, setHelperText] = useState({
+        isError: false,
+        errorMessage: ''
+    });
+
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
 
-    const [isValidEmail, setIsValidEmail] = useState(true);
-
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-        //TODO: Register the user and add all the data into firestore
+        setLoading(true);
+        if (data.email && data.password) {
+            const { firstName, lastName, email, password } = data;
+            try {
+                const newUser = await createUserWithEmailAndPassword(auth, email, password);
 
-        setOpen(true);
+                //Store data in firestore
+                await setDoc(doc(db, `users`, email), {
+                    firstName,
+                    lastName
+                });
+
+                await sendEmailVerification(newUser.user);
+
+                setOpen(true);
+            } catch (e) {
+                const error = e as AuthError;
+                const errorCode = getError(error);
+                setHelperText({ isError: true, errorMessage: t(errorCode) });
+            } finally {
+                setLoading(false);
+            }
+        }
     };
 
     return (
@@ -61,6 +91,7 @@ export const Register = (): JSX.Element => {
                     {t('signUpSubtitle')}
                 </Typography>
             </Box>
+
             <Box
                 component="form"
                 noValidate
@@ -93,28 +124,33 @@ export const Register = (): JSX.Element => {
                     <Grid item xs={12}>
                         <TextField
                             value={data.email}
-                            error={!isValidEmail}
+                            error={isError}
                             onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
-                                setIsValidEmail(await emailValidation(e.target.value));
+                                setHelperText({
+                                    isError: !(await emailValidation(e.target.value)),
+                                    errorMessage: t('invalidEmail')
+                                });
                             }}
                             fullWidth
                             id="email"
                             type="email"
                             label={t('email')}
-                            helperText={!isValidEmail && t('invalidEmail')}
+                            helperText={isError && errorMessage}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <PasswordField
+                            showHelperText={true}
                             label={t('password')}
                             password={data.password}
                             setPassword={setPassword}
                         />
                     </Grid>
                 </Grid>
-                <Button
-                    disabled={!isValidEmail || checkForEmptyInputs(data)}
+                <LoadingButton
+                    loading={loading}
+                    disabled={isError || checkForEmptyInputs(data)}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -123,7 +159,7 @@ export const Register = (): JSX.Element => {
                         mb: '16px'
                     }}>
                     {t('signUp')}
-                </Button>
+                </LoadingButton>
                 <Grid container justifyContent="center">
                     <Grid item>
                         <Typography variant="body2" sx={{ color: NEUTRAL.default }}>

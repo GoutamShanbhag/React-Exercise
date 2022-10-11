@@ -35,5 +35,13 @@
     "okay": "Okay",
     "signInFail": "Invalid Password",
     "signInFailSubtitle": "The password you entered seems to be incorrect, please try again.",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "invalidPassword": "Password length must be more than 6 characters",
+    "emailNotVerified": "Your email is not verified. Please verify your email to continue.",
+    "userNotFound": "Couldn't find your account",
+    "emailExists": "Email already in use",
+    "resetPasswordSuccessTitle": "Reset Link Sent Successfully",
+    "resetPasswordSuccessSubtitle": "The reset link to reset your password has been sent to your email, use the link to reset your password.",
+    "close": "Close",
+    "somethingWentWrong": "Something went wrong while logging in please try again"
 }

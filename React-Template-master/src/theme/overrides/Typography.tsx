@@ -30,8 +30,10 @@ export const TypographyStyle = (theme: Theme): Components => {
                     color: '#000000'
                 },
                 body1: {
-                    fontSize: '16px !important',
-                    lineHeight: '28px'
+                    fontSize: '14px !important',
+                    lineHeight: '24px',
+                    fontWeight: 400,
+                    letterSpacing: '0.3px'
                 },
 
                 body2: {

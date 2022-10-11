@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { Button, TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 import { emailValidation } from '../components/EmailValidation';
 import { MessageModal } from '../components/MessageModal';
+import { auth } from '../components/Firebase';
+import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
+import { getError } from '../components/ErrorHandling';
 
 interface SignInFormValues {
     email: string;
@@ -22,29 +27,54 @@ const checkForEmptyInputs = (data: SignInFormValues): boolean => {
 const MODAL_CONTENT = {
     title: 'signInFail',
     subtitle: 'signInFailSubtitle',
-    type: 'warning'
+    type: 'warning',
+    buttonText: 'tryAgain'
 };
 
 export const SignIn = (): JSX.Element => {
     const theme = useTheme();
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState({
         email: '',
         password: ''
     });
-    const [isValidEmail, setIsValidEmail] = useState(true);
-
+    const [{ isError, errorMessage }, setHelperText] = useState({
+        isError: false,
+        errorMessage: ''
+    });
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
 
-    const handleSubmit = (event: React.FormEvent): void => {
+    const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-        //TODO: Add firebase function to sign in and direct the page to dashboard
-        setOpen(true);
-
-        return;
+        setLoading(true);
+        if (data.email && data.password) {
+            const { email, password } = data;
+            try {
+                const user = await signInWithEmailAndPassword(auth, email, password);
+                if (!user.user.emailVerified) {
+                    setHelperText({ isError: true, errorMessage: t('emailNotVerified') });
+                } else {
+                    if (user.user.uid) {
+                        setLoading(false);
+                        navigate('/dashboard');
+                    }
+                }
+            } catch (e) {
+                const error = e as AuthError;
+                if (error.code === AuthErrorCodes.INVALID_PASSWORD) {
+                    setOpen(true);
+                } else {
+                    const errorCode = getError(error);
+                    setHelperText({ isError: true, errorMessage: t(errorCode) });
+                }
+                setLoading(false);
+            }
+        }
     };
 
     return (
@@ -66,14 +96,17 @@ export const SignIn = (): JSX.Element => {
                             value={data.email}
                             onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
-                                setIsValidEmail(await emailValidation(e.target.value));
+                                setHelperText({
+                                    isError: !(await emailValidation(e.target.value)),
+                                    errorMessage: t('invalidEmail')
+                                });
                             }}
                             id="email"
                             label={t('email')}
                             type="email"
                             autoFocus
-                            error={!isValidEmail}
-                            helperText={!isValidEmail && t('invalidEmail')}
+                            error={isError}
+                            helperText={isError && errorMessage}
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>
@@ -92,8 +125,9 @@ export const SignIn = (): JSX.Element => {
                         </Link>
                     </Grid>
                 </Grid>
-                <Button
-                    disabled={!isValidEmail || checkForEmptyInputs(data)}
+                <LoadingButton
+                    disabled={isError || checkForEmptyInputs(data)}
+                    loading={loading}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -102,7 +136,7 @@ export const SignIn = (): JSX.Element => {
                         mb: '16px'
                     }}>
                     {t('signIn')}
-                </Button>
+                </LoadingButton>
                 <Grid container justifyContent="center">
                     <Grid item>
                         <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
@@ -110,7 +144,10 @@ export const SignIn = (): JSX.Element => {
                             <Link
                                 variant="body2"
                                 href="/auth/register"
-                                sx={{ color: theme.palette.primary.light, textDecoration: 'none' }}>
+                                sx={{
+                                    color: theme.palette.primary.light,
+                                    textDecoration: 'none'
+                                }}>
                                 {t('signUp')}
                             </Link>
                         </Typography>

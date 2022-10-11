@@ -2,17 +2,20 @@ import { TextField, InputAdornment, IconButton, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { t } from 'i18next';
 
 interface PasswordFieldProps {
     password: string;
     label: string;
     setPassword: Function;
+    showHelperText?: boolean;
 }
 
 export const PasswordField = ({
     label,
     password,
-    setPassword
+    setPassword,
+    showHelperText
 }: PasswordFieldProps): JSX.Element => {
     const theme = useTheme();
 
@@ -59,6 +62,9 @@ export const PasswordField = ({
             type={passwordVisibility ? 'text' : 'password'}
             id="password"
             autoComplete="new-password"
+            helperText={
+                showHelperText && iconVisibility && password.length < 6 ? t('invalidPassword') : ''
+            }
         />
     );
 };

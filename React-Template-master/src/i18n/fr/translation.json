@@ -29,5 +29,19 @@
     "changePasswordSubtitle": "Entrez votre ancien et votre nouveau mot de passe dans les champs ci-dessous pour changer le mot de passe",
     "requiredField": "*Champs obligatoires",
     "newPassword": "Nouveau mot de passe",
-    "confirmPassword": "Confirmer le nouveau mot de passe"
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "signUpSuccess": "Inscription réussie",
+    "signUpSuccessSubtitle": "Vous vous êtes inscrit avec succès, nous vous avons envoyé un e-mail avec le lien de vérification.",
+    "okay": "D'accord",
+    "signInFail": "Mot de passe incorrect",
+    "signInFailSubtitle": "Le mot de passe que vous avez entré semble être incorrect, veuillez réessayer.",
+    "tryAgain": "Réessayer",
+    "invalidPassword": "La longueur du mot de passe doit être supérieure à 6 caractères",
+    "emailNotVerified": "Votre email n'est pas vérifié. Veuillez vérifier votre adresse e-mail pour continuer.",
+    "userNotFound": "Impossible de trouver votre compte",
+    "emailExists": "Email déjà utilisé",
+    "resetPasswordSuccessTitle": "Réinitialiser le lien envoyé avec succès",
+    "resetPasswordSuccessSubtitle": "Le lien de réinitialisation pour réinitialiser votre mot de passe a été envoyé à votre adresse e-mail, utilisez le lien pour réinitialiser votre mot de passe.",
+    "close": "Proche",
+    "somethingWentWrong": "Quelque chose s'est mal passé lors de la connexion, veuillez réessayer"
 }

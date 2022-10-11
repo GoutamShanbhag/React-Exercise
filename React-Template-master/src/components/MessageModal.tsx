@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, Button } from '@mui/material';
-import { NEUTRAL, WHITE } from '../theme/palette';
+import { Modal, Box, Typography, Button, useTheme } from '@mui/material';
+import { NEUTRAL } from '../theme/palette';
 import { CorrectLogo, WarningLogo } from './Logo';
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +10,8 @@ interface ConfirmationModalProps {
     modalContent: {
         title: string;
         subtitle: string;
-        type: string;
+        type?: string;
+        buttonText: string;
     };
 }
 
@@ -18,6 +19,7 @@ const style = {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
+    border: 'none',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -25,15 +27,17 @@ const style = {
     width: '408px',
     borderRadius: '4px',
     height: '268px',
-    bgcolor: WHITE.main,
     boxShadow: 24,
-    p: '20px'
+    p: '20px',
+    boxSizeing: 'content-box'
 };
 
 export const MessageModal = (props: ConfirmationModalProps): JSX.Element => {
     const { t } = useTranslation();
+    const theme = useTheme();
     const { open, setOpen, modalContent } = props;
-    const isCorrect = modalContent.type === 'correct';
+    const { type, title, subtitle, buttonText } = modalContent;
+    const isCorrect = type === 'correct';
     return (
         <Box>
             <Modal
@@ -41,22 +45,32 @@ export const MessageModal = (props: ConfirmationModalProps): JSX.Element => {
                 onClose={(): void => {
                     setOpen(false);
                 }}>
-                <Box sx={style}>
-                    {isCorrect ? <CorrectLogo /> : <WarningLogo />}
+                <Box sx={{ ...style, bgcolor: theme.palette.common.white }}>
+                    {type && (isCorrect ? <CorrectLogo /> : <WarningLogo />)}
                     <Typography variant="subtitle1" sx={{ mt: '11.3px' }}>
-                        {t(modalContent.title)}
+                        {t(title)}
                     </Typography>
                     <Typography
                         variant="body1"
-                        sx={{ textAlign: 'center', mt: '6px', width: '360px', height: '48px' }}>
-                        {t(modalContent.subtitle)}
+                        sx={{
+                            textAlign: 'center',
+                            mt: '6px',
+                            width: '360px',
+                            height: '48px'
+                        }}>
+                        {t(subtitle)}
                     </Typography>
                     <Button
                         fullWidth
-                        sx={{ mt: '24px' }}
+                        sx={{
+                            mt: '24px',
+                            position: 'absolute',
+                            bottom: '20px',
+                            width: '360px'
+                        }}
                         variant={isCorrect ? 'contained' : 'outlined'}
                         onClick={(): void => setOpen(false)}>
-                        {isCorrect ? t('okay') : t('tryAgain')}
+                        {t(buttonText)}
                     </Button>
                 </Box>
             </Modal>

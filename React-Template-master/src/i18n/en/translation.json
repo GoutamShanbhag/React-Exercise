@@ -20,5 +20,14 @@
     "forgotPassword": "Forgot password?",
     "signInSubtitle": "Sign in with your email",
     "haveAnAccount": "Already have an account ? ",
-    "signUpSubtitle": "Sign up with your email "
+    "signUpSubtitle": "Sign up with your email ",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "myProfile": "My Profile",
+    "changePassword": "Change Password",
+    "changePasswordTitle": "Change Your Password",
+    "changePasswordSubtitle": "Enter you old and new passwords in the fields below to change the password",
+    "requiredField": "*Required fields",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password"
 }

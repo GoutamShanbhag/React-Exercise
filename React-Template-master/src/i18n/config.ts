@@ -3,13 +3,11 @@ import { initReactI18next, useTranslation } from 'react-i18next';
 import enTranslation from './en/translation.json';
 import fnTranslation from './fr/translation.json';
 
-
 i18n.use(initReactI18next).init({
     lng: 'en',
     resources: {
         en: { translation: enTranslation },
         fr: { translation: fnTranslation }
-
     }
 });
 

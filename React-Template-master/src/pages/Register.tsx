@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { PasswordField } from '../components/PasswordField';
 import { emailValidation } from '../components/EmailValidation';
 import { NEUTRAL } from '../theme/palette';
-import { MessageModal } from '../components/MessageModal';
+import { MessageModal, ModalContent } from '../components/MessageModal';
 import { AuthError, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth, db } from '../components/Firebase';
 import { setDoc, doc } from 'firebase/firestore';
@@ -26,7 +26,7 @@ const checkForEmptyInputs = (data: SignUpFormValues): boolean => {
     return false;
 };
 
-const MODAL_CONTENT = {
+const MODAL_CONTENT: ModalContent = {
     title: 'signUpSuccess',
     subtitle: 'signUpSuccessSubtitle',
     type: 'correct',

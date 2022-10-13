@@ -6,9 +6,9 @@ import { emailValidation } from '../components/EmailValidation';
 import { auth } from '../components/Firebase';
 import { AuthError, sendPasswordResetEmail } from 'firebase/auth';
 import { getError } from '../components/ErrorHandling';
-import { MessageModal } from '../components/MessageModal';
+import { MessageModal, ModalContent } from '../components/MessageModal';
 
-const MODAL_CONTENT = {
+const MODAL_CONTENT: ModalContent = {
     title: 'resetPasswordSuccessTitle',
     subtitle: 'resetPasswordSuccessSubtitle',
     buttonText: 'close'

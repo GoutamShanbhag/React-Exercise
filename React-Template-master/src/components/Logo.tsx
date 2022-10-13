@@ -1,51 +1,34 @@
 import React from 'react';
 import { Box, SxProps } from '@mui/material';
-import AppLogo from '../assets/Lejit.svg';
-import Correct from '../assets/Correct.svg';
-import Warning from '../assets/Warning.svg';
+
 // ----------------------------------------------------------------------
+
+export type SupportedLogoType = 'app' | 'modal';
 
 interface LogoProps {
     sx?: SxProps;
+    type: SupportedLogoType;
+    src: string;
 }
 
-export const Logo = (sx: LogoProps): JSX.Element => {
-    return (
-        <Box
-            component="img"
-            src={AppLogo}
-            sx={{
-                width: '64px',
-                height: '33.6px',
-                ...sx
-            }}
-        />
-    );
-};
+enum AppDimension {
+    width = '64px',
+    height = '33.6px'
+}
 
-export const CorrectLogo = (): JSX.Element => {
-    return (
-        <Box
-            component="img"
-            src={Correct}
-            sx={{
-                width: '53.33px',
-                height: '53.33px',
-                top: '25.33px'
-            }}
-        />
-    );
-};
+enum ModalDimension {
+    width = '53.33px',
+    height = '53.33px',
+    top = '25.33px'
+}
 
-export const WarningLogo = (): JSX.Element => {
+export const Logo = ({ sx, type, src }: LogoProps): JSX.Element => {
     return (
         <Box
             component="img"
-            src={Warning}
+            src={src}
             sx={{
-                width: '53.33px',
-                height: '53.33px',
-                top: '25.33px'
+                ...(type === 'app' ? AppDimension : ModalDimension)
             }}
         />
     );

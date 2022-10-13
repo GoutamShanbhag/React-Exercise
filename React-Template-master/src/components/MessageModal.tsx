@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, useTheme } from '@mui/material';
 import { NEUTRAL } from '../theme/palette';
-import { CorrectLogo, WarningLogo } from './Logo';
+import Correct from '../assets/Correct.svg';
+import Warning from '../assets/Warning.svg';
+import { Logo } from './Logo';
 import { useTranslation } from 'react-i18next';
 
-interface ConfirmationModalProps {
+export type SupportedModalType = 'correct' | 'warning';
+export interface ModalContent {
+    title: string;
+    subtitle: string;
+    type?: SupportedModalType;
+    buttonText: string;
+}
+
+interface MessageModalProps {
     open: boolean;
     setOpen: Function;
-    modalContent: {
-        title: string;
-        subtitle: string;
-        type?: string;
-        buttonText: string;
-    };
+    modalContent: ModalContent;
 }
 
 const style = {
@@ -32,11 +37,13 @@ const style = {
     boxSizeing: 'content-box'
 };
 
-export const MessageModal = (props: ConfirmationModalProps): JSX.Element => {
+export const MessageModal = ({
+    open,
+    setOpen,
+    modalContent: { type, title, subtitle, buttonText }
+}: MessageModalProps): JSX.Element => {
     const { t } = useTranslation();
     const theme = useTheme();
-    const { open, setOpen, modalContent } = props;
-    const { type, title, subtitle, buttonText } = modalContent;
     const isCorrect = type === 'correct';
     return (
         <Box>
@@ -46,7 +53,12 @@ export const MessageModal = (props: ConfirmationModalProps): JSX.Element => {
                     setOpen(false);
                 }}>
                 <Box sx={{ ...style, bgcolor: theme.palette.common.white }}>
-                    {type && (isCorrect ? <CorrectLogo /> : <WarningLogo />)}
+                    {type &&
+                        (isCorrect ? (
+                            <Logo type={'modal'} src={Correct} />
+                        ) : (
+                            <Logo type={'modal'} src={Warning} />
+                        ))}
                     <Typography variant="subtitle1" sx={{ mt: '11.3px' }}>
                         {t(title)}
                     </Typography>

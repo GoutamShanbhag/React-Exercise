@@ -63,7 +63,7 @@ export const PasswordField = ({
             id="password"
             autoComplete="new-password"
             helperText={
-                showHelperText && iconVisibility && password.length < 6 ? t('invalidPassword') : ''
+                (showHelperText && iconVisibility && password.length < 6) ?? t('invalidPassword')
             }
         />
     );

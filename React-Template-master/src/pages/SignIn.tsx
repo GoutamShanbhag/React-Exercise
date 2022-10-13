@@ -4,7 +4,7 @@ import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 import { emailValidation } from '../components/EmailValidation';
-import { MessageModal } from '../components/MessageModal';
+import { MessageModal, ModalContent } from '../components/MessageModal';
 import { auth } from '../components/Firebase';
 import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -24,7 +24,7 @@ const checkForEmptyInputs = (data: SignInFormValues): boolean => {
     return false;
 };
 
-const MODAL_CONTENT = {
+const MODAL_CONTENT: ModalContent = {
     title: 'signInFail',
     subtitle: 'signInFailSubtitle',
     type: 'warning',
@@ -58,6 +58,7 @@ export const SignIn = (): JSX.Element => {
                 const user = await signInWithEmailAndPassword(auth, email, password);
                 if (!user.user.emailVerified) {
                     setHelperText({ isError: true, errorMessage: t('emailNotVerified') });
+                    setLoading(false);
                 } else {
                     if (user.user.uid) {
                         setLoading(false);

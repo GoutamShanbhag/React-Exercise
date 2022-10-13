@@ -9,10 +9,9 @@ export const getError = (error: AuthError): string => {
             return 'emailExists';
 
         case AuthErrorCodes.UNVERIFIED_EMAIL:
-            return '';
+            return 'emailNotVerified';
 
         default:
             return 'invalidErrorCode';
     }
-    return '';
 };

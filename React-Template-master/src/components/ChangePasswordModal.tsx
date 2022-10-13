@@ -17,7 +17,7 @@ const style = {
 
 interface ChangePasswordModalProps {
     open: boolean;
-    setOpen: Function;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Element => {

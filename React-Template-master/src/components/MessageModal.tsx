@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, useTheme } from '@mui/material';
-import { NEUTRAL } from '../theme/palette';
 import Correct from '../assets/Correct.svg';
 import Warning from '../assets/Warning.svg';
 import { Logo } from './Logo';
@@ -16,7 +15,7 @@ export interface ModalContent {
 
 interface MessageModalProps {
     open: boolean;
-    setOpen: Function;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     modalContent: ModalContent;
 }
 

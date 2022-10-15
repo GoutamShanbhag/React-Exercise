@@ -43,6 +43,7 @@
     "resetPasswordSuccessTitle": "Réinitialiser le lien envoyé avec succès",
     "resetPasswordSuccessSubtitle": "Le lien de réinitialisation pour réinitialiser votre mot de passe a été envoyé à votre adresse e-mail, utilisez le lien pour réinitialiser votre mot de passe.",
     "close": "Proche",
-    "somethingWentWrong": "Quelque chose s'est mal passé lors de la connexion, veuillez réessayer"
-
+    "somethingWentWrong": "Quelque chose s'est mal passé lors de la connexion, veuillez réessayer",
+    "invalidErrorCode": "Quelque chose s'est mal passé. Veuillez essayer après un certain temps",
+    "cancel": "Annuler"
 }

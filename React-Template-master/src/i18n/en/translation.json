@@ -43,5 +43,7 @@
     "resetPasswordSuccessTitle": "Reset Link Sent Successfully",
     "resetPasswordSuccessSubtitle": "The reset link to reset your password has been sent to your email, use the link to reset your password.",
     "close": "Close",
-    "somethingWentWrong": "Something went wrong while logging in please try again"
+    "somethingWentWrong": "Something went wrong while logging in please try again",
+    "invalidErrorCode": "Something went wrong. Please try after some time",
+    "cancel": "Cancel"
 }

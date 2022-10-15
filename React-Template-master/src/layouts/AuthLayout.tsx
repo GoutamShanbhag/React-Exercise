@@ -18,7 +18,13 @@ export const AuthLayout = (): JSX.Element => {
                             alignItems: 'left',
                             textAlign: 'left'
                         }}>
-                        <Logo type={'app'} src={AppLogo} />
+                        <Logo
+                            sx={{
+                                width: '64px',
+                                height: '33.6px'
+                            }}
+                            src={AppLogo}
+                        />
                         <Outlet />
                     </Box>
                 </Container>

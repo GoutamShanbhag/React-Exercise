@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, Button, useTheme } from '@mui/material';
-import Correct from '../assets/Correct.svg';
-import Warning from '../assets/Warning.svg';
+import { Modal, Box, Typography, Button, useTheme, styled, Paper } from '@mui/material';
+import Success from '../assets/Correct.svg';
+import Error from '../assets/Warning.svg';
 import { Logo } from './Logo';
 import { useTranslation } from 'react-i18next';
 
-export type SupportedModalType = 'correct' | 'warning';
-export interface ModalContent {
+export type SupportedModalType = 'success' | 'error';
+
+interface MessageModalProps {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     title: string;
     subtitle: string;
     type?: SupportedModalType;
     buttonText: string;
 }
 
-interface MessageModalProps {
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    modalContent: ModalContent;
-}
+const getIcon = (type: SupportedModalType): JSX.Element => {
+    return (
+        <Logo
+            sx={{ width: '53.33px', height: '53.33px' }}
+            src={type === 'success' ? Success : Error}
+        />
+    );
+};
 
-const style = {
+//--------------------------------------------
+const BoxStyle = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.common.white,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
@@ -31,19 +39,34 @@ const style = {
     width: '408px',
     borderRadius: '4px',
     height: '268px',
-    boxShadow: 24,
     p: '20px',
-    boxSizeing: 'content-box'
-};
+    boxSizing: 'content-box'
+}));
 
+const Subtitle = styled(Typography)(({ theme }) => ({
+    textAlign: 'center',
+    mt: '6px',
+    width: '360px',
+    height: '48px'
+}));
+
+const SubmitButton = styled(Button)(({ theme }) => ({
+    mt: '24px',
+    position: 'absolute',
+    bottom: '20px',
+    width: '360px'
+}));
+//----------------------------------------------
 export const MessageModal = ({
     open,
     setOpen,
-    modalContent: { type, title, subtitle, buttonText }
+    type,
+    title,
+    subtitle,
+    buttonText
 }: MessageModalProps): JSX.Element => {
-    const { t } = useTranslation();
     const theme = useTheme();
-    const isCorrect = type === 'correct';
+    const isCorrect = type === 'success';
     return (
         <Box>
             <Modal
@@ -51,39 +74,19 @@ export const MessageModal = ({
                 onClose={(): void => {
                     setOpen(false);
                 }}>
-                <Box sx={{ ...style, bgcolor: theme.palette.common.white }}>
-                    {type &&
-                        (isCorrect ? (
-                            <Logo type={'modal'} src={Correct} />
-                        ) : (
-                            <Logo type={'modal'} src={Warning} />
-                        ))}
+                <BoxStyle>
+                    <Box sx={{ mt: '25.33px' }}>{type && getIcon(type)}</Box>
                     <Typography variant="subtitle1" sx={{ mt: '11.3px' }}>
-                        {t(title)}
+                        {title}
                     </Typography>
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            textAlign: 'center',
-                            mt: '6px',
-                            width: '360px',
-                            height: '48px'
-                        }}>
-                        {t(subtitle)}
-                    </Typography>
-                    <Button
+                    <Subtitle variant="body1">{subtitle}</Subtitle>
+                    <SubmitButton
                         fullWidth
-                        sx={{
-                            mt: '24px',
-                            position: 'absolute',
-                            bottom: '20px',
-                            width: '360px'
-                        }}
                         variant={isCorrect ? 'contained' : 'outlined'}
                         onClick={(): void => setOpen(false)}>
-                        {t(buttonText)}
-                    </Button>
-                </Box>
+                        {buttonText}
+                    </SubmitButton>
+                </BoxStyle>
             </Modal>
         </Box>
     );

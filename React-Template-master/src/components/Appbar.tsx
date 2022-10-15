@@ -103,7 +103,6 @@ export const Appbar = (): JSX.Element => {
                                 width: '64px',
                                 height: '33.6px'
                             }}
-                            type={'app'}
                             src={AppLogo}
                         />
                     </Box>

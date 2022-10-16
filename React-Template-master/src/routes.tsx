@@ -7,6 +7,7 @@ import { AuthLayout } from './layouts/AuthLayout';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { Page404 } from './pages/Page404';
 import { ChangePassword } from './pages/ChangePassword';
+import { Users } from './pages/Users';
 
 export function Router(): React.ReactElement | null {
     return useRoutes([
@@ -32,7 +33,10 @@ export function Router(): React.ReactElement | null {
         {
             path: '/dashboard',
             element: <DashboardLayout />,
-            children: [{ path: '/dashboard/change-password', element: <ChangePassword /> }]
+            children: [
+                { path: '/dashboard/', element: <ChangePassword /> },
+                { path: '/dashboard/users', element: <Users /> }
+            ]
         },
         {
             path: '/*',

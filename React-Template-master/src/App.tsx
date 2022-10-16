@@ -4,13 +4,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './i18n/config';
 import { ThemeConfig } from './theme';
 import { Router as AppRouter } from './routes';
+import { UserProvider } from './context/Context';
 
 export function App(): JSX.Element {
     const { t } = useTranslation();
     return (
         <ThemeConfig>
             <Router>
-                <AppRouter />
+                <UserProvider>
+                    <AppRouter />
+                </UserProvider>
             </Router>
         </ThemeConfig>
     );

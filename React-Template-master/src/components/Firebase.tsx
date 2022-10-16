@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { setDoc, doc, getFirestore } from 'firebase/firestore';
+import { setDoc, doc, getFirestore, getDoc, DocumentData } from 'firebase/firestore';
 import {
     AuthErrorCodes,
     createUserWithEmailAndPassword,
@@ -50,4 +50,22 @@ export const logIn = async ({ email, password }: UserSignIn): Promise<UserCreden
     }
 
     return user;
+};
+
+export const getDataFromFireStore = async (
+    uid: string,
+    errorMessage: string
+): Promise<DocumentData | null> => {
+    if (uid) {
+        const docRef = doc(db, 'users', uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const result = docSnap.data();
+            return result;
+        } else {
+            alert(errorMessage);
+        }
+    }
+
+    return null;
 };

@@ -1,4 +1,10 @@
-export class User {
+export interface UserData {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+export class User implements UserData {
     firstName = '';
 
     lastName = '';

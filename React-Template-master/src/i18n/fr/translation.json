@@ -45,5 +45,11 @@
     "close": "Proche",
     "somethingWentWrong": "Quelque chose s'est mal passé lors de la connexion, veuillez réessayer",
     "invalidErrorCode": "Quelque chose s'est mal passé. Veuillez essayer après un certain temps",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "passwordChangedTitle": "Couronné de succès",
+    "passwordChangedSubtitle": "Le mot de passe a été changé avec succès",
+    "unVerifiedEmail": "Courriel non vérifié. Veuillez vérifier l'e-mail pour vous connecter",
+    "passwordMissMatch": "Le mot de passe ne correspond pas",
+    "dataNotFound": "Données introuvables. Veuillez réessayer après un certain temps",
+    "signOut": "Se déconnecter"
 }

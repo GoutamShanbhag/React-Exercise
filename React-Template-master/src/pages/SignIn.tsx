@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 import { emailValidation } from '../components/EmailValidation';
 import { MessageModal } from '../components/MessageModal';
-import { auth, logIn } from '../components/Firebase';
-import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
+import { logIn } from '../components/Firebase';
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import { getError } from '../components/ErrorHandling';
@@ -53,6 +53,7 @@ export const SignIn = (): JSX.Element => {
                 }
             } catch (e) {
                 const authError = e as AuthError;
+                console.log(e);
 
                 if (authError.code === AuthErrorCodes.INVALID_PASSWORD) {
                     setOpen(true);

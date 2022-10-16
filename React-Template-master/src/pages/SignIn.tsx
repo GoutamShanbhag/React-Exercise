@@ -45,7 +45,7 @@ export const SignIn = (): JSX.Element => {
         const { email, password } = data;
         if (email && password) {
             try {
-                const user = await logIn(email, password);
+                const user = await logIn({ email, password });
 
                 if (user.user.uid) {
                     setLoading(false);

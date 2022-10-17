@@ -7,8 +7,7 @@ import { auth } from './Firebase';
 import { AuthError, updatePassword } from 'firebase/auth';
 import { MessageModal } from './MessageModal';
 
-//-------------------------------------------------
-const BoxStyle = styled(Box)(({ theme }) => ({
+const BoxContainer = styled(Box)(({ theme }) => ({
     position: 'absolute',
     border: 'none',
     borderRadius: '4px',
@@ -21,7 +20,6 @@ const BoxStyle = styled(Box)(({ theme }) => ({
     padding: '23px',
     backgroundColor: theme.palette.common.white
 }));
-//-------------------------------------------------
 
 interface ChangePasswordModalProps {
     open: boolean;
@@ -66,7 +64,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                 onClose={(): void => {
                     setOpen(false);
                 }}>
-                <BoxStyle>
+                <BoxContainer>
                     <Typography
                         variant="subtitle1"
                         sx={{
@@ -97,7 +95,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <PasswordField
-                                showHelperText={helperText}
+                                helperText={helperText}
                                 password={data.confirmNewPassword}
                                 setPassword={setConfirmNewPassword}
                                 label={t('confirmPassword')}
@@ -129,7 +127,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                             </Button>
                         </Grid>
                     </Grid>
-                </BoxStyle>
+                </BoxContainer>
             </Modal>
             <MessageModal
                 open={showConfirmation}

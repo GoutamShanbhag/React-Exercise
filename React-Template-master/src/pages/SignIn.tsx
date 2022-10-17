@@ -45,7 +45,7 @@ export const SignIn = (): JSX.Element => {
         const { email, password } = data;
         if (email && password) {
             try {
-                const user = await logIn(data);
+                const user = await logIn(email, password);
 
                 if (user.user.uid) {
                     setLoading(false);
@@ -53,7 +53,6 @@ export const SignIn = (): JSX.Element => {
                 }
             } catch (e) {
                 const authError = e as AuthError;
-                console.log(e);
 
                 if (authError.code === AuthErrorCodes.INVALID_PASSWORD) {
                     setOpen(true);
@@ -85,7 +84,8 @@ export const SignIn = (): JSX.Element => {
                             value={data.email}
                             onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
-                                if (!(await emailValidation(e.target.value))) {
+                                const isValid = await emailValidation(e.target.value);
+                                if (!isValid) {
                                     setError(t('invalidEmail'));
                                 } else {
                                     setError('');

@@ -1,27 +1,18 @@
-import { initializeApp } from 'firebase/app';
-import { setDoc, doc, getFirestore, getDoc, DocumentData } from 'firebase/firestore';
+import { setDoc, doc, getDoc, DocumentData } from 'firebase/firestore';
+import { db, auth } from './config';
 import {
-    AuthErrorCodes,
     createUserWithEmailAndPassword,
-    getAuth,
     sendEmailVerification,
     signInWithEmailAndPassword,
     UserCredential
 } from 'firebase/auth';
-import { User } from './User';
 
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID
-};
-
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+interface User {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
 
 export const createNewUser = async (user: User): Promise<void> => {
     const { firstName, lastName, email, password } = user;
@@ -37,10 +28,6 @@ export const createNewUser = async (user: User): Promise<void> => {
 
 export const logIn = async (email: string, password: string): Promise<UserCredential> => {
     const user = await signInWithEmailAndPassword(auth, email, password);
-
-    if (!user.user.emailVerified) {
-        throw new Error(AuthErrorCodes.UNVERIFIED_EMAIL);
-    }
 
     return user;
 };

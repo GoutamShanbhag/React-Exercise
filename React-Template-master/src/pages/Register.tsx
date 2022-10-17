@@ -9,7 +9,6 @@ import { AuthError } from 'firebase/auth';
 import { createNewUser } from '../components/Firebase';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getError } from '../components/ErrorHandling';
-import { User } from '../components/User';
 
 interface SignUpFormValues {
     firstName: string;
@@ -46,11 +45,10 @@ export const Register = (): JSX.Element => {
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         setLoading(true);
-        if (data.email && data.password) {
-            const { firstName, lastName, email, password } = data;
-            const user = new User(firstName, lastName, email, password);
+        const { firstName, lastName, email, password } = data;
+        if (email && password) {
             try {
-                await createNewUser(user);
+                await createNewUser({ firstName, lastName, email, password });
                 setOpen(true);
             } catch (e) {
                 const authError = e as AuthError;
@@ -110,7 +108,8 @@ export const Register = (): JSX.Element => {
                             error={Boolean(error)}
                             onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
-                                if (!(await emailValidation(e.target.value))) {
+                                const isValid = await emailValidation(e.target.value);
+                                if (!isValid) {
                                     setError(t('invalidEmail'));
                                 } else {
                                     setError('');
@@ -125,7 +124,7 @@ export const Register = (): JSX.Element => {
                     </Grid>
                     <Grid item xs={12}>
                         <PasswordField
-                            showHelperText={'invalidPassword'}
+                            helperText={'invalidPassword'}
                             label={t('password')}
                             password={data.password}
                             setPassword={setPassword}

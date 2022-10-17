@@ -8,7 +8,7 @@ interface PasswordFieldProps {
     password: string;
     label: string;
     setPassword: Function;
-    showHelperText?: string;
+    helperText?: string;
     required?: boolean;
 }
 
@@ -28,7 +28,7 @@ export const PasswordField = ({
     required,
     password,
     setPassword,
-    showHelperText
+    helperText
 }: PasswordFieldProps): JSX.Element => {
     const theme = useTheme();
 
@@ -73,11 +73,11 @@ export const PasswordField = ({
             required={required}
             fullWidth
             label={label}
-            error={Boolean(showHelperText) && password.length > 0}
+            error={Boolean(helperText) && password.length > 0}
             type={passwordVisibility ? 'text' : 'password'}
             id="password"
             autoComplete="new-password"
-            helperText={getHelperText(showHelperText, password)}
+            helperText={getHelperText(helperText, password)}
         />
     );
 };

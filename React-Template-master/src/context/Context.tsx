@@ -1,9 +1,10 @@
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc, Unsubscribe } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { Unsubscribe } from 'firebase/firestore';
 import React, { createContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { auth, db, getDataFromFireStore } from '../components/Firebase';
+import { auth, getDataFromFireStore } from '../components/Firebase';
+import { Box, CircularProgress } from '@mui/material';
 
 interface User {
     firstName: string;
@@ -24,6 +25,7 @@ export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
     const [user, setUser] = useState<User>({ firstName: '', lastName: '', email: '' });
     const [uid, setUid] = useState<string | null>(null);
     const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const navigate = useNavigate();
     const { pathname } = useLocation();
     useEffect(() => {
@@ -59,8 +61,10 @@ export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
                     if (data) {
                         const { email, firstName, lastName } = data;
                         setUser({ firstName, lastName, email });
+                        setLoaded(true);
                     } else {
                         alert(t('dataNotFound'));
+                        navigate('/auth/login');
                     }
                 }
             } catch (e) {
@@ -70,5 +74,11 @@ export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
         getUserData();
     }, [uid]);
 
-    return <userContext.Provider value={user}>{children}</userContext.Provider>;
+    return loaded ? (
+        <userContext.Provider value={user}>{children}</userContext.Provider>
+    ) : (
+        <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100vw">
+            <CircularProgress />
+        </Box>
+    );
 };

@@ -67,7 +67,7 @@ export const ForgotPassword = (): JSX.Element => {
             <LoadingButton
                 onClick={onSubmit}
                 loading={loading}
-                disabled={Boolean(Error) || email.length === 0}
+                disabled={Boolean(error) || email.length === 0}
                 fullWidth
                 variant="contained"
                 sx={{

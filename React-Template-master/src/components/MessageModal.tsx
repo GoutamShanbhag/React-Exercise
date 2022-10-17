@@ -45,6 +45,7 @@ const BoxStyle = styled(Box)(({ theme }) => ({
 
 const Subtitle = styled(Typography)(({ theme }) => ({
     textAlign: 'center',
+    boxSizing: 'content-box',
     mt: '6px',
     width: '360px',
     height: '48px'

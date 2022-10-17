@@ -8,14 +8,14 @@ interface PasswordFieldProps {
     password: string;
     label: string;
     setPassword: Function;
-    showHelperText?: boolean;
+    helperText?: boolean;
 }
 
 export const PasswordField = ({
     label,
     password,
     setPassword,
-    showHelperText
+    helperText
 }: PasswordFieldProps): JSX.Element => {
     const theme = useTheme();
 
@@ -63,7 +63,7 @@ export const PasswordField = ({
             id="password"
             autoComplete="new-password"
             helperText={
-                (showHelperText && iconVisibility && password.length < 6) ?? t('invalidPassword')
+                (helperText && iconVisibility && password.length < 6) ?? t('invalidPassword')
             }
         />
     );

@@ -5,7 +5,7 @@ import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 import { emailValidation } from '../components/EmailValidation';
 import { MessageModal } from '../components/MessageModal';
-import { auth, logIn } from '../components/Firebase';
+import { logIn } from '../Firebase/FirebaseFunctions';
 import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
@@ -45,7 +45,7 @@ export const SignIn = (): JSX.Element => {
         const { email, password } = data;
         if (email && password) {
             try {
-                const user = await logIn(data);
+                const user = await logIn(email, password);
 
                 if (user.user.uid) {
                     setLoading(false);
@@ -84,7 +84,8 @@ export const SignIn = (): JSX.Element => {
                             value={data.email}
                             onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
-                                if (!(await emailValidation(e.target.value))) {
+                                const isValid = await emailValidation(e.target.value);
+                                if (!isValid) {
                                     setError(t('invalidEmail'));
                                 } else {
                                     setError('');

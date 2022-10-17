@@ -3,8 +3,7 @@ import { Modal, Grid, Box, TextField, Typography, Button, styled } from '@mui/ma
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 
-//-------------------------------------------------
-const BoxStyle = styled(Box)(({ theme }) => ({
+const BoxContainer = styled(Box)(({ theme }) => ({
     position: 'absolute',
     border: 'none',
     top: '50%',
@@ -16,7 +15,6 @@ const BoxStyle = styled(Box)(({ theme }) => ({
     p: '20px',
     backgroundColor: theme.palette.common.white
 }));
-//-------------------------------------------------
 
 interface ChangePasswordModalProps {
     open: boolean;
@@ -33,7 +31,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                 onClose={(): void => {
                     setOpen(false);
                 }}>
-                <BoxStyle>
+                <BoxContainer>
                     <Typography
                         variant="subtitle1"
                         sx={{
@@ -73,7 +71,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                             </Button>
                         </Grid>
                     </Grid>
-                </BoxStyle>
+                </BoxContainer>
             </Modal>
         </Box>
     );

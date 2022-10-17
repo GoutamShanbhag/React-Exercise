@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { emailValidation } from '../components/EmailValidation';
-import { auth } from '../components/Firebase';
+import { auth } from '../Firebase/config';
 import { AuthError, sendPasswordResetEmail } from 'firebase/auth';
 import { getError } from '../components/ErrorHandling';
 import { MessageModal } from '../components/MessageModal';
@@ -48,7 +48,8 @@ export const ForgotPassword = (): JSX.Element => {
                         value={email}
                         onChange={async (e): Promise<void> => {
                             setEmail(e.target.value);
-                            if (!(await emailValidation(e.target.value))) {
+                            const isValid = await emailValidation(e.target.value);
+                            if (!isValid) {
                                 setError(t('invalidEmail'));
                             } else {
                                 setError('');

@@ -1,7 +1,6 @@
 import { AuthError, AuthErrorCodes } from 'firebase/auth';
 
 export const getError = (error: AuthError): string => {
-    console.log(error);
     if (error.message === AuthErrorCodes.UNVERIFIED_EMAIL) {
         return 'emailNotVerified';
     }

@@ -3,9 +3,10 @@ import { Modal, Grid, Box, Typography, Button, styled } from '@mui/material';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 import { PasswordField } from './PasswordField';
-import { auth } from './Firebase';
-import { AuthError, updatePassword } from 'firebase/auth';
+import { AuthError } from 'firebase/auth';
 import { MessageModal } from './MessageModal';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { updateUserPassword } from '../Firebase/FirebaseFunctions';
 
 const BoxContainer = styled(Box)(({ theme }) => ({
     position: 'absolute',
@@ -15,7 +16,7 @@ const BoxContainer = styled(Box)(({ theme }) => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '408px',
-    height: '430px',
+    height: 'auto',
     boxShadow: '24px',
     padding: '23px',
     backgroundColor: theme.palette.common.white
@@ -31,6 +32,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
     const { t } = useTranslation();
     const [data, setData] = useState({ newPassword: '', confirmNewPassword: '' });
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [helperText, setHelperText] = useState<string>('');
 
     const setNewPassword = (newPassword: string): void => {
@@ -44,17 +46,17 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
     };
 
     const handleSubmit = async (): Promise<void> => {
+        setLoading(true);
         try {
-            if (auth.currentUser) {
-                const result = await updatePassword(auth.currentUser, data.confirmNewPassword);
-                setShowConfirmation(true);
-                setOpen(false);
-            }
+            updateUserPassword(data.confirmNewPassword);
+            setShowConfirmation(true);
+            setOpen(false);
         } catch (e) {
             const error = e as AuthError;
             alert(error);
         } finally {
             setData({ newPassword: '', confirmNewPassword: '' });
+            setLoading(false);
         }
     };
     return (
@@ -103,17 +105,18 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Button
+                            <LoadingButton
                                 disabled={
                                     data.confirmNewPassword !== data.newPassword ||
                                     data.confirmNewPassword.length === 0 ||
                                     data.newPassword.length === 0
                                 }
+                                loading={loading}
                                 fullWidth
                                 variant="contained"
                                 onClick={handleSubmit}>
                                 {t('changePassword')}
-                            </Button>
+                            </LoadingButton>
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <Button

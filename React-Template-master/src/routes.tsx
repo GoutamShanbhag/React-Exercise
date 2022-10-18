@@ -8,6 +8,7 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { Page404 } from './pages/Page404';
 import { ChangePassword } from './pages/ChangePassword';
 import { Users } from './pages/Users';
+import { MyProfile } from './pages/MyProfile';
 
 export function Router(): React.ReactElement | null {
     return useRoutes([
@@ -35,7 +36,8 @@ export function Router(): React.ReactElement | null {
             element: <DashboardLayout />,
             children: [
                 { path: '/dashboard/', element: <ChangePassword /> },
-                { path: '/dashboard/users', element: <Users /> }
+                { path: '/dashboard/users', element: <Users /> },
+                { path: '/dashboard/my-profile', element: <MyProfile /> }
             ]
         },
         {

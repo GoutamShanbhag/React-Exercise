@@ -20,6 +20,7 @@ const getHelperText = (helperText: string | undefined, password: string): string
             return helperText;
         }
     }
+
     return '';
 };
 

@@ -1,33 +1,53 @@
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { Unsubscribe } from 'firebase/firestore';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { auth, getDataFromFireStore } from '../components/Firebase';
+import { auth } from '../Firebase/config';
 import { Box, CircularProgress } from '@mui/material';
-
-interface User {
-    firstName: string;
-    lastName: string;
-    email: string;
-}
+import { getDataFromFireStore } from '../Firebase/FirebaseFunctions';
 
 interface UserProviderProps {
     children?: React.ReactNode;
 }
 
-export const userContext = createContext<User>({ firstName: '', lastName: '', email: '' });
+interface UserData {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+export const userContext = createContext<UserData | null>(null);
 
 export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
     children
 }: UserProviderProps): JSX.Element => {
     const { t } = useTranslation();
-    const [user, setUser] = useState<User>({ firstName: '', lastName: '', email: '' });
-    const [uid, setUid] = useState<string | null>(null);
-    const [isUserSignedIn, setIsUserSignedIn] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+    const [user, setUser] = useState<UserData | null>(null);
+    const [loaded, setLoaded] = useState<boolean | false>(false);
+    const [userSignedIn, setUserSignedIn] = useState(false);
     const navigate = useNavigate();
     const { pathname } = useLocation();
+
+    const getUserData = async (uid: string): Promise<void> => {
+        try {
+            if (uid) {
+                const data = await getDataFromFireStore(uid, t('somethingWentWrong'));
+                if (data) {
+                    const { email, firstName, lastName } = data;
+                    setUser({ firstName, lastName, email });
+                    setUserSignedIn(true);
+                    setLoaded(true);
+                } else {
+                    alert(t('dataNotFound'));
+                    navigate('/auth/login');
+                }
+            }
+        } catch (e) {
+            alert(t('somethingWentWrong'));
+        }
+    };
+
     useEffect(() => {
         let unsubscribe: Unsubscribe | undefined;
 
@@ -38,41 +58,26 @@ export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
         ) {
             try {
                 unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+                    setLoaded(false);
                     if (firebaseUser) {
-                        setUid(firebaseUser.uid);
-                        setIsUserSignedIn(true);
+                        if (!user) {
+                            getUserData(firebaseUser.uid);
+                        }
                     } else {
+                        setUser(null);
                         navigate('/auth/login');
                     }
+                    setLoaded(true);
                 });
             } catch (e) {
                 alert(e);
             }
+        } else {
+            setLoaded(true);
         }
 
         return unsubscribe;
     }, [pathname]);
-
-    useEffect(() => {
-        const getUserData = async (): Promise<void> => {
-            try {
-                if (uid) {
-                    const data = await getDataFromFireStore(uid, t('somethingWentWrong'));
-                    if (data) {
-                        const { email, firstName, lastName } = data;
-                        setUser({ firstName, lastName, email });
-                        setLoaded(true);
-                    } else {
-                        alert(t('dataNotFound'));
-                        navigate('/auth/login');
-                    }
-                }
-            } catch (e) {
-                alert(t('somethingWentWrong'));
-            }
-        };
-        getUserData();
-    }, [uid]);
 
     return loaded ? (
         <userContext.Provider value={user}>{children}</userContext.Provider>

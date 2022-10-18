@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-import { auth } from './Firebase';
+import { auth } from '../Firebase/config';
 //-----------------------------------------------------
 
 const NavButtons = styled(Button)(({ theme }) => ({
@@ -55,7 +55,7 @@ const navbarTitles: { title: string; path: string }[] = [
 export const Appbar = (): JSX.Element => {
     const { pathname } = useLocation();
     const [language, setLanguage] = useState('en');
-    const userData = useContext(userContext);
+    const user = useContext(userContext);
     const [activeItem, setActiveItem] = useState(pathname.toString());
     const { t } = useTranslation();
     const theme = useTheme();
@@ -70,7 +70,12 @@ export const Appbar = (): JSX.Element => {
                     setLanguage(item.languageCode);
                     changeLanguage(item.languageCode);
                 }}
-                sx={{ display: 'flex', padding: '8px', pr: '51px' }}>
+                sx={{
+                    display: 'flex',
+                    padding: '8px',
+                    pr: '51px',
+                    backgroundColor: `${theme.palette.common.white} !important`
+                }}>
                 <Box
                     component="img"
                     src={item.image}
@@ -99,6 +104,12 @@ export const Appbar = (): JSX.Element => {
             </Link>
         );
     });
+
+    if (!user) {
+        return <React.Fragment></React.Fragment>;
+    }
+    const { firstName, lastName } = user;
+
     return (
         <Box>
             <AppBar
@@ -169,7 +180,7 @@ export const Appbar = (): JSX.Element => {
                                                 sx={{
                                                     color: PURPLE.dark
                                                 }}>
-                                                {getInitials(userData.firstName, userData.lastName)}
+                                                {getInitials(firstName, lastName)}
                                             </Typography>
                                         </Avatar>
                                         <Menu
@@ -192,7 +203,7 @@ export const Appbar = (): JSX.Element => {
                                         width: 'auto'
                                     }}>
                                     <Typography variant="body2">
-                                        {getName(userData.firstName, userData.lastName)}
+                                        {getName(firstName, lastName)}
                                     </Typography>
                                 </Box>
                             </Box>

@@ -7,11 +7,17 @@ import { userContext } from '../context/Context';
 import { getInitials, getName } from '../components/utils';
 
 export const ChangePassword = (): JSX.Element => {
-    const userData = useContext(userContext);
+    const user = useContext(userContext);
+
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
+
+    if (!user) {
+        return <></>;
+    }
+    const { firstName, lastName, email } = user;
     return (
-        <div>
+        <Box>
             <Box
                 sx={{
                     display: 'flex',
@@ -36,15 +42,13 @@ export const ChangePassword = (): JSX.Element => {
                                     color: PURPLE.dark,
                                     fontSize: '32px'
                                 }}>
-                                {getInitials(userData.firstName, userData.lastName)}
+                                {getInitials(firstName, lastName)}
                             </Typography>
                         </Avatar>
                     </IconButton>
                     <Box>
-                        <Typography variant="h5">
-                            {getName(userData.firstName, userData.lastName)}
-                        </Typography>
-                        <Typography variant="h3">{userData.email}</Typography>
+                        <Typography variant="h5">{getName(firstName, lastName)}</Typography>
+                        <Typography variant="h3">{email}</Typography>
                     </Box>
                 </Box>
                 <Box>
@@ -57,6 +61,6 @@ export const ChangePassword = (): JSX.Element => {
                 </Box>
             </Box>
             <ChangePasswordModal open={open} setOpen={setOpen} />
-        </div>
+        </Box>
     );
 };

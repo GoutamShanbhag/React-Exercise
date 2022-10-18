@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
-export const Users = (): JSX.Element => {
+export const MyProfile = (): JSX.Element => {
     return (
         <Box
             sx={{
@@ -12,7 +12,7 @@ export const Users = (): JSX.Element => {
                 justifyContent: 'center',
                 textAlign: 'center'
             }}>
-            <Typography variant="h1">Users</Typography>
+            <Typography variant="h1">My Profile</Typography>
         </Box>
     );
 };

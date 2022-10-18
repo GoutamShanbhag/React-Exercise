@@ -1,8 +1,9 @@
-export const getInitials = (firstName: string, lastName: string): string => {
+export const getInitials = (firstName: string | null, lastName: string | null): string => {
     let initials = '';
-    if (firstName.length >= 1) initials += firstName.charAt(0);
-    if (lastName.length >= 1) initials += lastName.charAt(0);
-
+    if (firstName && lastName) {
+        if (firstName.length >= 1) initials += firstName.charAt(0).toUpperCase();
+        if (lastName.length >= 1) initials += lastName.charAt(0).toUpperCase();
+    }
     return initials;
 };
 

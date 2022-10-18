@@ -51,7 +51,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                     color: NEUTRAL.default
                 },
                 body1: {
-                    fontSize: '15px !important',
+                    fontSize: '14px !important',
                     lineHeight: '24px',
                     fontWeight: 400,
                     letterSpacing: '0.3px'

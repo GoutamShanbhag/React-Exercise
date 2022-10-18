@@ -3,7 +3,6 @@ import { Modal, Box, Typography, Button, useTheme, styled, Paper } from '@mui/ma
 import Success from '../assets/Correct.svg';
 import Error from '../assets/Warning.svg';
 import { Logo } from './Logo';
-import { useTranslation } from 'react-i18next';
 
 export type SupportedModalType = 'success' | 'error';
 
@@ -25,7 +24,6 @@ const getIcon = (type: SupportedModalType): JSX.Element => {
     );
 };
 
-//--------------------------------------------
 const BoxStyle = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.common.white,
     display: 'flex',
@@ -36,28 +34,24 @@ const BoxStyle = styled(Box)(({ theme }) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '408px',
+    width: 'auto',
     borderRadius: '4px',
-    height: '268px',
-    p: '20px',
+    height: 'auto',
+    padding: '20px',
     boxSizing: 'content-box'
 }));
 
 const Subtitle = styled(Typography)(({ theme }) => ({
     textAlign: 'center',
     boxSizing: 'content-box',
-    mt: '6px',
     width: '360px',
     height: '48px'
 }));
 
 const SubmitButton = styled(Button)(({ theme }) => ({
-    mt: '24px',
-    position: 'absolute',
-    bottom: '20px',
-    width: '360px'
+    width: '360px',
+    marginTop: '24px'
 }));
-//----------------------------------------------
 export const MessageModal = ({
     open,
     setOpen,
@@ -76,7 +70,7 @@ export const MessageModal = ({
                     setOpen(false);
                 }}>
                 <BoxStyle>
-                    <Box sx={{ mt: '25.33px' }}>{type && getIcon(type)}</Box>
+                    <Box>{type && getIcon(type)}</Box>
                     <Typography variant="subtitle1" sx={{ mt: '11.3px' }}>
                         {title}
                     </Typography>

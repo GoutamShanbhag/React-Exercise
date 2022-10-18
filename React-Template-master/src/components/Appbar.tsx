@@ -3,6 +3,7 @@ import { Logo } from '../components/Logo';
 import { useTranslation } from 'react-i18next';
 import { changeLanguage, SupportedLanguage } from '../i18n/config';
 import { NEUTRAL, PURPLE } from '../theme/palette';
+import AppLogo from '../assets/Lejit.svg';
 import france from '../france.png';
 import english from '../english.png';
 import {
@@ -102,6 +103,7 @@ export const Appbar = (): JSX.Element => {
                                 width: '64px',
                                 height: '33.6px'
                             }}
+                            src={AppLogo}
                         />
                     </Box>
                     <Box

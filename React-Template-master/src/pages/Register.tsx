@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Button, TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Link, Box, Grid, Typography, useTheme, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PasswordField } from '../components/PasswordField';
 import { emailValidation } from '../components/EmailValidation';
 import { NEUTRAL } from '../theme/palette';
+import { MessageModal } from '../components/MessageModal';
+import { AuthError, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { createNewUser } from '../Firebase/FirebaseFunctions';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { getError } from '../components/ErrorHandling';
 
 interface SignUpFormValues {
     firstName: string;
@@ -29,16 +34,30 @@ export const Register = (): JSX.Element => {
         email: '',
         password: ''
     });
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
 
-    const [isValidEmail, setIsValidEmail] = useState(true);
-
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-        //TODO: Register the user and add all the data into firestore
+        setLoading(true);
+        const { firstName, lastName, email, password } = data;
+        if (email && password) {
+            try {
+                await createNewUser({ firstName, lastName, email, password });
+                setOpen(true);
+            } catch (e) {
+                const authError = e as AuthError;
+                const errorCode = getError(authError);
+                setError(t(errorCode));
+            } finally {
+                setLoading(false);
+            }
+        }
     };
 
     return (
@@ -52,6 +71,7 @@ export const Register = (): JSX.Element => {
                     {t('signUpSubtitle')}
                 </Typography>
             </Box>
+
             <Box
                 component="form"
                 noValidate
@@ -84,28 +104,35 @@ export const Register = (): JSX.Element => {
                     <Grid item xs={12}>
                         <TextField
                             value={data.email}
-                            error={!isValidEmail}
+                            error={Boolean(error)}
                             onChange={async (e): Promise<void> => {
                                 setData({ ...data, email: e.target.value });
-                                setIsValidEmail(await emailValidation(e.target.value));
+                                const isValid = await emailValidation(e.target.value);
+                                if (!isValid) {
+                                    setError(t('invalidEmail'));
+                                } else {
+                                    setError('');
+                                }
                             }}
                             fullWidth
                             id="email"
                             type="email"
                             label={t('email')}
-                            helperText={!isValidEmail && t('invalidEmail')}
+                            helperText={Boolean(error) && error}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <PasswordField
+                            helperText={true}
                             label={t('password')}
                             password={data.password}
                             setPassword={setPassword}
                         />
                     </Grid>
                 </Grid>
-                <Button
-                    disabled={!isValidEmail || checkForEmptyInputs(data)}
+                <LoadingButton
+                    loading={loading}
+                    disabled={Boolean(error) || checkForEmptyInputs(data)}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -114,7 +141,7 @@ export const Register = (): JSX.Element => {
                         mb: '16px'
                     }}>
                     {t('signUp')}
-                </Button>
+                </LoadingButton>
                 <Grid container justifyContent="center">
                     <Grid item>
                         <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
@@ -129,6 +156,14 @@ export const Register = (): JSX.Element => {
                     </Grid>
                 </Grid>
             </Box>
+            <MessageModal
+                open={open}
+                setOpen={setOpen}
+                title={t('signUpSuccess')}
+                subtitle={t('signUpSuccessSubtitle')}
+                type={t('success')}
+                buttonText={t('okay')}
+            />
         </Box>
     );
 };

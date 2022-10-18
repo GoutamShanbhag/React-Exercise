@@ -1,18 +1,32 @@
 import { Box, Typography, Grid, TextField, Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { emailValidation } from '../components/EmailValidation';
+import { auth } from '../Firebase/config';
+import { AuthError, sendPasswordResetEmail } from 'firebase/auth';
+import { getError } from '../components/ErrorHandling';
+import { MessageModal } from '../components/MessageModal';
 
 export const ForgotPassword = (): JSX.Element => {
     const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isValidEmail, setIsValidEmail] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [error, setError] = useState('');
 
-    const onSubmit = (): void => {
+    const onSubmit = async (): Promise<void> => {
         setLoading(true);
-        //TODO: Add functionalities to change password
+        try {
+            await sendPasswordResetEmail(auth, email);
+            setLoading(false);
+            setOpen(true);
+        } catch (e) {
+            const authError = e as AuthError;
+            const errorCode = getError(authError);
+            setError(t(errorCode));
+            setLoading(false);
+        }
     };
 
     return (
@@ -30,11 +44,16 @@ export const ForgotPassword = (): JSX.Element => {
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} sx={{ mt: '40px' }}>
                     <TextField
-                        error={!isValidEmail}
+                        error={Boolean(error)}
                         value={email}
                         onChange={async (e): Promise<void> => {
                             setEmail(e.target.value);
-                            setIsValidEmail(await emailValidation(e.target.value));
+                            const isValid = await emailValidation(e.target.value);
+                            if (!isValid) {
+                                setError(t('invalidEmail'));
+                            } else {
+                                setError('');
+                            }
                         }}
                         autoComplete="email"
                         fullWidth
@@ -42,14 +61,14 @@ export const ForgotPassword = (): JSX.Element => {
                         label={t('email')}
                         id="email"
                         autoFocus
-                        helperText={!isValidEmail && t('invalidEmail')}
+                        helperText={Boolean(error) && error}
                     />
                 </Grid>
             </Grid>
             <LoadingButton
                 onClick={onSubmit}
                 loading={loading}
-                disabled={email.length === 0}
+                disabled={Boolean(Error) || email.length === 0}
                 fullWidth
                 variant="contained"
                 sx={{
@@ -58,6 +77,13 @@ export const ForgotPassword = (): JSX.Element => {
                 }}>
                 {t('resetPassword')}
             </LoadingButton>
+            <MessageModal
+                open={open}
+                setOpen={setOpen}
+                title={t('resetPasswordSuccessTitle')}
+                subtitle={t('resetPasswordSuccessSubtitle')}
+                buttonText={t('close')}
+            />
         </Box>
     );
 };

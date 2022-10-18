@@ -1,22 +1,21 @@
 import React from 'react';
 import { Box, SxProps } from '@mui/material';
-import AppLogo from '../assets/Lejit.svg';
+
 // ----------------------------------------------------------------------
 
 interface LogoProps {
     sx?: SxProps;
+    src: string;
 }
 
-export function Logo(sx: LogoProps): JSX.Element {
+export const Logo = ({ sx, src }: LogoProps): JSX.Element => {
     return (
         <Box
             component="img"
-            src={AppLogo}
+            src={src}
             sx={{
-                width: '64px',
-                height: '33.6px',
                 ...sx
             }}
         />
     );
-}
+};

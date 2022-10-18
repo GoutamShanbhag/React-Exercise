@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Modal, Grid, Box, TextField, useTheme, Typography, Button } from '@mui/material';
+import React from 'react';
+import { Modal, Grid, Box, TextField, Typography, Button, styled } from '@mui/material';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
 
-const style = {
+const BoxContainer = styled(Box)(({ theme }) => ({
     position: 'absolute',
     border: 'none',
     top: '50%',
@@ -11,19 +11,19 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: '408px',
     height: '430px',
-    boxShadow: 24,
-    p: '20px'
-};
+    boxShadow: '24px',
+    p: '20px',
+    backgroundColor: theme.palette.common.white
+}));
 
 interface ChangePasswordModalProps {
     open: boolean;
-    setOpen: Function;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Element => {
     const { open, setOpen } = props;
     const { t } = useTranslation();
-    const theme = useTheme();
     return (
         <Box>
             <Modal
@@ -31,7 +31,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                 onClose={(): void => {
                     setOpen(false);
                 }}>
-                <Box sx={{ ...style, backgroundColor: theme.palette.common.white }}>
+                <BoxContainer>
                     <Typography
                         variant="subtitle1"
                         sx={{
@@ -67,11 +67,11 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                                 variant="outlined"
                                 fullWidth
                                 onClick={(): void => setOpen(false)}>
-                                Cancel
+                                {t('cancel')}
                             </Button>
                         </Grid>
                     </Grid>
-                </Box>
+                </BoxContainer>
             </Modal>
         </Box>
     );

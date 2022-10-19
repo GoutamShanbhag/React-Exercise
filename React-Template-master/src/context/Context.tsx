@@ -25,7 +25,6 @@ export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
     const { t } = useTranslation();
     const [user, setUser] = useState<UserData | null>(null);
     const [loaded, setLoaded] = useState<boolean | false>(false);
-    const [userSignedIn, setUserSignedIn] = useState(false);
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -36,7 +35,6 @@ export const UserProvider: React.FunctionComponent<UserProviderProps> = ({
                 if (data) {
                     const { email, firstName, lastName } = data;
                     setUser({ firstName, lastName, email });
-                    setUserSignedIn(true);
                     setLoaded(true);
                 } else {
                     alert(t('dataNotFound'));

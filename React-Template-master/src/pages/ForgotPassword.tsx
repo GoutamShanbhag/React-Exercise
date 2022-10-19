@@ -1,12 +1,12 @@
 import { Box, Typography, Grid, TextField, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { emailValidation } from '../Utils/Validation';
-import { auth } from '../Firebase/config';
-import { AuthError, sendPasswordResetEmail } from 'firebase/auth';
+import { AuthError } from 'firebase/auth';
 import { getError } from '../components/ErrorHandling';
 import { MessageModal } from '../components/MessageModal';
+import { resetPasswordWithEmailLink } from '../Firebase/FirebaseFunctions';
 
 export const ForgotPassword = (): JSX.Element => {
     const { t } = useTranslation();
@@ -18,7 +18,7 @@ export const ForgotPassword = (): JSX.Element => {
     const onSubmit = async (): Promise<void> => {
         setLoading(true);
         try {
-            await sendPasswordResetEmail(auth, email);
+            await resetPasswordWithEmailLink(email);
             setLoading(false);
             setOpen(true);
         } catch (e) {

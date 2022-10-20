@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { emailValidation } from '../Utils/Validation';
 import { AuthError } from 'firebase/auth';
+
 import { getError } from '../components/ErrorHandling';
 import { MessageModal } from '../components/MessageModal';
 import { resetPasswordWithEmailLink } from '../Firebase/FirebaseFunctions';

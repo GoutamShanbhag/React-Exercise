@@ -6,6 +6,7 @@ import { emailValidation } from '../Utils/Validation';
 import { NEUTRAL } from '../theme/palette';
 import { MessageModal } from '../components/MessageModal';
 import { AuthError } from 'firebase/auth';
+
 import { createNewUser } from '../Firebase/FirebaseFunctions';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getError } from '../components/ErrorHandling';

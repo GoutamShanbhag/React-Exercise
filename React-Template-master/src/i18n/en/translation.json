@@ -44,6 +44,12 @@
     "resetPasswordSuccessSubtitle": "The reset link to reset your password has been sent to your email, use the link to reset your password.",
     "close": "Close",
     "somethingWentWrong": "Something went wrong while logging in please try again",
+    "cancel": "Cancel",
+    "passwordChangedTitle": "Successful",
+    "passwordChangedSubtitle": "Password has been changed successfully",
+    "unVerifiedEmail": "Email not verified. Please verify the Email to sign in",
+    "passwordMissMatch": "Password doesn't match",
     "invalidErrorCode": "Something went wrong. Please try after some time",
-    "cancel": "Cancel"
+    "dataNotFound": "Data not found. Please try again after some time",
+    "signOut": "Sign Out"
 }

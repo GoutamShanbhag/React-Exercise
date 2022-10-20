@@ -9,7 +9,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                     fontStyle: 'normal',
                     fontWeight: 400,
                     fontFamily: 'Inter',
-                    fontSize: '16px',
+                    fontSize: '14px ',
                     lineHeight: '28px',
                     letterSpacing: '0.3px',
                     color: NEUTRAL.default
@@ -22,12 +22,33 @@ export const TypographyStyle = (theme: Theme): Components => {
                     letterSpacing: '0.25px',
                     color: NEUTRAL.darker
                 },
+                h3: {
+                    fontWeight: 400,
+                    fontSize: '16px !important',
+                    lineHeight: '28px',
+                    letterSpacing: '0.3px'
+                },
+                h4: {
+                    fontWeight: 700,
+                    fontSize: '14px',
+                    lineHeight: '20px',
+                    letterSpacing: '0.1px',
+                    textTransform: 'capitalize',
+                    color: NEUTRAL.darker
+                },
+
                 h5: {
                     fontWeight: 700,
                     height: '40px ',
                     fontSize: '24px !important',
                     lineHeight: '40px',
                     color: '#000000'
+                },
+                h6: {
+                    fontSize: '14px',
+                    lineHeight: '24px',
+                    letterSpacing: '0.3px',
+                    color: NEUTRAL.default
                 },
                 body1: {
                     fontSize: '14px !important',
@@ -51,20 +72,6 @@ export const TypographyStyle = (theme: Theme): Components => {
                     letterSpacing: '0.5px'
                 },
 
-                h4: {
-                    fontWeight: 700,
-                    fontSize: '14px',
-                    lineHeight: '20px',
-                    letterSpacing: '0.1px',
-                    textTransform: 'capitalize',
-                    color: NEUTRAL.darker
-                },
-                h6: {
-                    fontSize: '14px',
-                    lineHeight: '24px',
-                    letterSpacing: '0.3px',
-                    color: NEUTRAL.default
-                },
                 subtitle1: {
                     width: '360px',
                     height: '32px',
@@ -77,7 +84,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                 },
                 subtitle2: {
                     fontWeight: 400,
-                    fontSize: '12px',
+                    fontSize: '14px !important',
                     lineHeight: '24px',
                     textAlign: 'center',
                     letterSpacing: '0.3px'

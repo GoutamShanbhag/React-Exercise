@@ -14,7 +14,6 @@ i18n.use(initReactI18next).init({
 export type SupportedLanguage = 'en' | 'fr';
 
 // Function to change language
-
 export const changeLanguage = (language: SupportedLanguage): void => {
     i18n.changeLanguage(language);
 };

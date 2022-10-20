@@ -4,7 +4,9 @@ import {
     createUserWithEmailAndPassword,
     sendEmailVerification,
     signInWithEmailAndPassword,
-    UserCredential
+    UserCredential,
+    updatePassword
+
 } from 'firebase/auth';
 
 interface User {
@@ -48,4 +50,10 @@ export const getDataFromFireStore = async (
     }
 
     return null;
+};
+
+export const updateUserPassword = async (password: string): Promise<void> => {
+    if (auth.currentUser) {
+        await updatePassword(auth.currentUser, password);
+    }
 };

@@ -67,6 +67,7 @@ const ERROR: PaletteColorOptions = {
 };
 
 export const NEUTRAL = {
+    lighter: '#C7C8D9',
     default: '#555770',
     darker: '#1C1C28',
     dark: '#8E90A6',

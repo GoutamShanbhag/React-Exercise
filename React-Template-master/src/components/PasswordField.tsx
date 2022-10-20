@@ -8,19 +8,34 @@ interface PasswordFieldProps {
     password: string;
     label: string;
     setPassword: Function;
-    helperText?: boolean;
+    helperText?: string;
+    required?: boolean;
+
 }
+
+const getHelperText = (helperText: string | undefined, password: string): string => {
+    if (helperText) {
+        if (password.length > 1 && password.length < 6) {
+            return t('invalidPassword');
+        } else if (password.length >= 6) {
+            return helperText;
+        }
+    }
+
+    return '';
+};
 
 export const PasswordField = ({
     label,
+    required,
     password,
     setPassword,
     helperText
 }: PasswordFieldProps): JSX.Element => {
     const theme = useTheme();
 
-    const [passwordVisibility, setPasswordVisibility] = useState(false);
-    const [iconVisibility, setIconVisibility] = useState(false);
+    const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
+    const [iconVisibility, setIconVisibility] = useState<boolean>(false);
 
     useEffect(() => {
         if (password.length === 0) setIconVisibility(false);
@@ -57,14 +72,15 @@ export const PasswordField = ({
                     </InputAdornment>
                 )
             }}
+            required={required}
             fullWidth
             label={label}
+            error={Boolean(helperText) && password.length > 0}
             type={passwordVisibility ? 'text' : 'password'}
             id="password"
             autoComplete="new-password"
-            helperText={
-                (helperText && iconVisibility && password.length < 6) ?? t('invalidPassword')
-            }
+            helperText={getHelperText(helperText, password)}
+
         />
     );
 };

@@ -1,15 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
-import { emailValidation } from '../components/EmailValidation';
+import { emailValidation } from '../Utils/Validation';
 import { MessageModal } from '../components/MessageModal';
 import { logIn } from '../Firebase/FirebaseFunctions';
-import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
+
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import { getError } from '../components/ErrorHandling';
+import { userContext } from '../context/Context';
 
 interface SignInFormValues {
     email: string;
@@ -35,6 +37,7 @@ export const SignIn = (): JSX.Element => {
         password: ''
     });
     const [error, setError] = useState('');
+    const user = useContext(userContext);
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
@@ -45,11 +48,14 @@ export const SignIn = (): JSX.Element => {
         const { email, password } = data;
         if (email && password) {
             try {
-                const user = await logIn(email, password);
+                const userData = await logIn(email, password);
 
-                if (user.user.uid) {
+
+                if (userData.user.emailVerified) {
                     setLoading(false);
                     navigate('/dashboard');
+                } else {
+                    throw new Error(AuthErrorCodes.UNVERIFIED_EMAIL);
                 }
             } catch (e) {
                 const authError = e as AuthError;

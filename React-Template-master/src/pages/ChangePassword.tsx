@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, IconButton, Avatar, Typography, Button } from '@mui/material';
 import { PURPLE } from '../theme/palette';
 import { ChangePasswordModal } from '../components/ChangePasswordModal';
 import { useTranslation } from 'react-i18next';
+import { userContext } from '../context/Context';
+import { getInitials, getName } from '../components/utils';
 
 export const ChangePassword = (): JSX.Element => {
+    const user = useContext(userContext);
+
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
+
+    if (!user) {
+        return <></>;
+    }
+    const { firstName, lastName, email } = user;
     return (
-        <div>
+        <Box>
             <Box
                 sx={{
                     display: 'flex',
@@ -27,21 +36,19 @@ export const ChangePassword = (): JSX.Element => {
                                 textAlign: 'center',
                                 backgroundColor: PURPLE.lighter
                             }}>
-                            {/* TODO: Add User's initials */}
                             <Typography
                                 variant="h1"
                                 sx={{
                                     color: PURPLE.dark,
                                     fontSize: '32px'
                                 }}>
-                                RS
+                                {getInitials(firstName, lastName)}
                             </Typography>
                         </Avatar>
                     </IconButton>
                     <Box>
-                        {/* TODO : Add the user's name and email address */}
-                        <Typography variant="h5">Rohit Sharma</Typography>
-                        <Typography variant="body1">Rohit.sharma@email.com</Typography>
+                        <Typography variant="h5">{getName(firstName, lastName)}</Typography>
+                        <Typography variant="h3">{email}</Typography>
                     </Box>
                 </Box>
                 <Box>
@@ -54,6 +61,6 @@ export const ChangePassword = (): JSX.Element => {
                 </Box>
             </Box>
             <ChangePasswordModal open={open} setOpen={setOpen} />
-        </div>
+        </Box>
     );
 };

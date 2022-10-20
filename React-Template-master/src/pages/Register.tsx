@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { TextField, Link, Box, Grid, Typography, useTheme, Alert } from '@mui/material';
+import { TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PasswordField } from '../components/PasswordField';
-import { emailValidation } from '../components/EmailValidation';
+import { emailValidation } from '../Utils/Validation';
 import { NEUTRAL } from '../theme/palette';
 import { MessageModal } from '../components/MessageModal';
-import { AuthError, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { AuthError } from 'firebase/auth';
+
 import { createNewUser } from '../Firebase/FirebaseFunctions';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getError } from '../components/ErrorHandling';
@@ -37,8 +38,13 @@ export const Register = (): JSX.Element => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [helperText, setHelperText] = useState<string>('');
 
     const setPassword = (password: string): void => {
+        if (password.length >= 6) setHelperText('');
+        else {
+            setHelperText(t('invalidPassword'));
+        }
         setData({ ...data, password });
     };
 
@@ -65,6 +71,7 @@ export const Register = (): JSX.Element => {
             <Box sx={{ height: '130px', mt: '77px' }}>
                 <Typography variant="h1">{t('signUp')}</Typography>
                 <Typography
+                    variant="h3"
                     sx={{
                         mb: '40px'
                     }}>
@@ -123,7 +130,7 @@ export const Register = (): JSX.Element => {
                     </Grid>
                     <Grid item xs={12}>
                         <PasswordField
-                            helperText={true}
+                            helperText={helperText}
                             label={t('password')}
                             password={data.password}
                             setPassword={setPassword}
@@ -132,7 +139,7 @@ export const Register = (): JSX.Element => {
                 </Grid>
                 <LoadingButton
                     loading={loading}
-                    disabled={Boolean(error) || checkForEmptyInputs(data)}
+                    disabled={Boolean(error) || checkForEmptyInputs(data) || Boolean(helperText)}
                     type="submit"
                     fullWidth
                     variant="contained"

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Logo } from '../components/Logo';
 import { useTranslation } from 'react-i18next';
 import { changeLanguage, SupportedLanguage } from '../i18n/config';
 import { NEUTRAL, PURPLE } from '../theme/palette';
+import { userContext } from '../context/Context';
+import { getInitials, getName } from './utils';
 import AppLogo from '../assets/Lejit.svg';
 import france from '../france.png';
 import english from '../english.png';
@@ -12,15 +14,17 @@ import {
     Toolbar,
     Typography,
     Button,
-    Tooltip,
     IconButton,
     Avatar,
     Select,
     styled,
     MenuItem,
-    useTheme
+    useTheme,
+    Menu
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../Firebase/config';
 //-----------------------------------------------------
 
 const NavButtons = styled(Button)(({ theme }) => ({
@@ -42,16 +46,22 @@ const languageItems: {
 ];
 
 const navbarTitles: { title: string; path: string }[] = [
-    { title: 'dashboard', path: '/dashboard/change-password' },
+    { title: 'dashboard', path: '/dashboard' },
     { title: 'users', path: '/dashboard/users' },
     { title: 'myProfile', path: '/dashboard/my-profile' }
 ];
 //------------------------------------------------------
 
 export const Appbar = (): JSX.Element => {
+    const { pathname } = useLocation();
     const [language, setLanguage] = useState('en');
+    const user = useContext(userContext);
+    const [activeItem, setActiveItem] = useState(pathname.toString());
     const { t } = useTranslation();
     const theme = useTheme();
+    const [openMenu, setOpenMenu] = useState<boolean>(false);
+    const navigate = useNavigate();
+
     const allLanguages = languageItems.map((item): JSX.Element => {
         return (
             <MenuItem
@@ -60,7 +70,12 @@ export const Appbar = (): JSX.Element => {
                     setLanguage(item.languageCode);
                     changeLanguage(item.languageCode);
                 }}
-                sx={{ display: 'flex', padding: '8px', pr: '51px' }}>
+                sx={{
+                    display: 'flex',
+                    padding: '8px',
+                    pr: '51px',
+                    backgroundColor: `${theme.palette.common.white} !important`
+                }}>
                 <Box
                     component="img"
                     src={item.image}
@@ -76,11 +91,25 @@ export const Appbar = (): JSX.Element => {
     });
     const navItems = navbarTitles.map((item): JSX.Element => {
         return (
-            <Link key={item.title} to={item.path} style={{ textDecoration: 'none' }}>
+            <Link
+                onClick={(): void => setActiveItem(item.path)}
+                key={item.title}
+                to={item.path}
+                style={{
+                    textDecoration: 'none',
+                    WebkitTextFillColor:
+                        item.path === activeItem ? theme.palette.primary.dark : NEUTRAL.lighter
+                }}>
                 <NavButtons>{t(item.title)}</NavButtons>
             </Link>
         );
     });
+
+    if (!user) {
+        return <React.Fragment></React.Fragment>;
+    }
+    const { firstName, lastName } = user;
+
     return (
         <Box>
             <AppBar
@@ -92,6 +121,11 @@ export const Appbar = (): JSX.Element => {
                 }}>
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Box
+                        component="div"
+                        onClick={(): void => {
+                            setActiveItem('/dashboard');
+                            navigate('/dashboard');
+                        }}
                         sx={{
                             ml: '80px',
                             mt: '33px',
@@ -118,7 +152,6 @@ export const Appbar = (): JSX.Element => {
                     <Box
                         sx={{
                             width: '25%',
-                            justifyContent: 'space-around',
                             mr: '86px',
                             display: 'flex',
                             alignItems: 'center'
@@ -126,35 +159,61 @@ export const Appbar = (): JSX.Element => {
                         <Box
                             sx={{
                                 display: 'flex',
-                                width: '40%',
-                                alignItems: 'center'
+                                width: '60%',
+                                alignItems: 'center',
+                                justifyContent: 'space-around'
                             }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <IconButton sx={{ color: PURPLE.lighter }}>
-                                    <Avatar
-                                        sx={{
-                                            width: '48px',
-                                            height: '48px',
-                                            backgroundColor: PURPLE.lighter
-                                        }}>
-                                        <Typography variant="body2" sx={{ color: PURPLE.dark }}>
-                                            {/* TODO : Take data from firestore  */}
-                                            RS
-                                        </Typography>
-                                    </Avatar>
-                                </IconButton>
-
-                                <Typography variant="body2">
-                                    {/* TODO : Take data from firestore */}
-                                    Rohit Sharma
-                                </Typography>
+                                <Box>
+                                    <IconButton
+                                        id="iconbutton"
+                                        onClick={(): void => setOpenMenu(!openMenu)}
+                                        sx={{ color: PURPLE.lighter }}>
+                                        <Avatar
+                                            sx={{
+                                                width: '48px',
+                                                height: '48px',
+                                                backgroundColor: PURPLE.lighter
+                                            }}>
+                                            <Typography
+                                                variant="body2"
+                                                sx={{
+                                                    color: PURPLE.dark
+                                                }}>
+                                                {getInitials(firstName, lastName)}
+                                            </Typography>
+                                        </Avatar>
+                                        <Menu
+                                            id="basic-menu"
+                                            anchorEl={document.getElementById('iconbutton')}
+                                            open={openMenu}>
+                                            <MenuItem
+                                                onClick={(): void => {
+                                                    signOut(auth);
+                                                    setOpenMenu(false);
+                                                }}>
+                                                {t('signOut')}
+                                            </MenuItem>
+                                        </Menu>
+                                    </IconButton>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        alignContent: 'center',
+                                        width: 'auto'
+                                    }}>
+                                    <Typography variant="body2">
+                                        {getName(firstName, lastName)}
+                                    </Typography>
+                                </Box>
                             </Box>
                         </Box>
                         <Box
                             sx={{
                                 width: '0px',
                                 height: '24px',
-                                border: `1px solid ${NEUTRAL.dark}`
+                                border: `1px solid ${NEUTRAL.dark}`,
+                                mr: '24px'
                             }}
                         />
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -167,10 +226,11 @@ export const Appbar = (): JSX.Element => {
                                 }}>
                                 {language === 'en' ? 'EN' : 'FR'}
                             </Typography>
+
+                            <Select variant="standard" disableUnderline>
+                                {allLanguages}
+                            </Select>
                         </Box>
-                        <Select variant="standard" disableUnderline>
-                            {allLanguages}
-                        </Select>
                     </Box>
                 </Toolbar>
             </AppBar>

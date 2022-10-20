@@ -1,5 +1,4 @@
 import { Components, Theme } from '@mui/material';
-import { NEUTRAL } from '../palette';
 
 export const TypographyStyle = (theme: Theme): Components => {
     return {
@@ -7,89 +6,189 @@ export const TypographyStyle = (theme: Theme): Components => {
             styleOverrides: {
                 root: {
                     fontStyle: 'normal',
-                    fontWeight: 400,
                     fontFamily: 'Inter',
-                    fontSize: '14px ',
-                    lineHeight: '28px',
-                    letterSpacing: '0.3px',
-                    color: NEUTRAL.default
+                    color: theme.palette.common.black
                 },
 
                 h1: {
                     fontWeight: 700,
-                    fontSize: '34px',
-                    lineHeight: '64px',
-                    letterSpacing: '0.25px',
-                    color: NEUTRAL.darker
+                    fontSize: '96px',
+                    lineHeight: '120px',
+                    letterSpacing: '-1.5px'
+                },
+                h2: {
+                    fontWeight: 700,
+                    fontSize: '60px',
+                    lineHeight: '80px',
+                    letterSpacing: '-0.5px'
                 },
                 h3: {
-                    fontWeight: 400,
-                    fontSize: '16px !important',
-                    lineHeight: '28px',
-                    letterSpacing: '0.3px'
+                    fontWeight: 700,
+                    fontSize: '48px',
+                    lineHeight: '72px'
                 },
                 h4: {
                     fontWeight: 700,
-                    fontSize: '14px',
-                    lineHeight: '20px',
-                    letterSpacing: '0.1px',
-                    textTransform: 'capitalize',
-                    color: NEUTRAL.darker
+                    fontSize: '34px',
+                    lineHeight: '64px',
+                    letterSpacing: '0.25px'
                 },
 
                 h5: {
                     fontWeight: 700,
-                    height: '40px ',
-                    fontSize: '24px !important',
-                    lineHeight: '40px',
-                    color: '#000000'
+                    fontSize: '24px',
+                    lineHeight: '40px'
                 },
                 h6: {
-                    fontSize: '14px',
-                    lineHeight: '24px',
-                    letterSpacing: '0.3px',
-                    color: NEUTRAL.default
+                    fontWeight: 700,
+                    fontSize: '20px',
+                    lineHeight: '32px'
                 },
                 body1: {
-                    fontSize: '14px !important',
-                    lineHeight: '24px',
                     fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '28px',
                     letterSpacing: '0.3px'
                 },
 
                 body2: {
-                    height: '24px',
-                    fontWeight: 700,
+                    fontWeight: 400,
                     fontSize: '14px',
                     lineHeight: '24px',
                     letterSpacing: '0.3px'
                 },
                 button: {
                     fontWeight: 700,
-                    color: theme.palette.primary.light,
-                    fontSize: '14px',
-                    lineHeight: '20px',
-                    letterSpacing: '0.5px'
+                    fontSize: '16px',
+                    lineHeight: '24px',
+                    letterSpacing: '0.5px',
+                    textTransform: 'capitalize'
                 },
 
                 subtitle1: {
-                    width: '360px',
-                    height: '32px',
                     fontWeight: 700,
-                    fontSize: '22px !important',
+                    fontSize: '22px',
                     lineHeight: '32px',
-                    textAlign: 'center',
                     letterSpacing: '0.1px',
-                    color: '#28293D'
+                    textTransform: 'capitalize'
                 },
                 subtitle2: {
+                    fontWeight: 700,
+                    fontSize: '18px',
+                    lineHeight: '32px',
+                    letterSpacing: '0.1px',
+                    textTransform: 'capitalize'
+                },
+                caption: {
                     fontWeight: 400,
-                    fontSize: '14px !important',
-                    lineHeight: '24px',
-                    textAlign: 'center',
+                    fontSize: '12px',
+                    lineHeight: '16px',
                     letterSpacing: '0.3px'
+                },
+                overline: {
+                    fontWeight: 400,
+                    fontSize: '12px',
+                    lineHeight: '16px',
+                    letterSpacing: '1.5px',
+                    textTransform: 'uppercase'
                 }
             }
         }
     };
+};
+
+export const h7 = {
+    fontWeight: 700,
+    fontSize: '14px',
+    lineHeight: '24px'
+};
+
+export const subtitle3 = {
+    fontWeight: 700,
+    fontSize: '16px',
+    lineHeight: '24px',
+    letterSpacing: '0.1px',
+    textTransform: 'capitalize'
+};
+
+export const subtitle4 = {
+    fontWeight: 700,
+    fontSize: '14px',
+    lineHeight: '20px',
+    letterSpacing: '0.1px',
+    textTransform: 'capitalize'
+};
+
+export const subtitle5 = {
+    fontWeight: 700,
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '0.1px',
+    textTransform: 'capitalize'
+};
+
+export const body3 = {
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '20px',
+    letterSpacing: '0.3px'
+};
+
+export const small1 = {
+    fontWeight: 700,
+    fontSize: '16px',
+    lineHeight: '28px',
+    letterSpacing: '0.3px'
+};
+
+export const small2 = {
+    fontWeight: 700,
+    fontSize: '14px',
+    lineHeight: '24px',
+    letterSpacing: '0.3px'
+};
+
+export const small3 = {
+    fontWeight: 700,
+    fontSize: '12px',
+    lineHeight: '20px',
+    letterSpacing: '0.3px'
+};
+
+export const small4 = {
+    fontWeight: 700,
+    fontSize: '10px',
+    lineHeight: '16px',
+    letterSpacing: '0.3px'
+};
+
+export const button2 = {
+    fontWeight: 700,
+    fontSize: '14px',
+    lineHeight: '20px',
+    letterSpacing: '0.5px',
+    textTransform: 'capitalize'
+};
+
+export const button3 = {
+    fontWeight: 700,
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '0.5px',
+    textTransform: 'capitalize'
+};
+
+export const caption2 = {
+    fontWeight: 400,
+    fontSize: '10px',
+    lineHeight: '12px',
+    letterSpacing: '0.3px'
+};
+
+export const overline2 = {
+    fontWeight: 400,
+    fontSize: '10px',
+    lineHeight: '12px',
+    letterSpacing: '1.5px',
+    textTransform: 'uppercase'
 };

@@ -7,6 +7,7 @@ import { AuthError } from 'firebase/auth';
 import { getError } from '../components/ErrorHandling';
 import { MessageModal } from '../components/MessageModal';
 import { resetPasswordWithEmailLink } from '../Firebase/FirebaseFunctions';
+import { NEUTRAL } from '../theme/palette';
 
 export const ForgotPassword = (): JSX.Element => {
     const { t } = useTranslation();
@@ -31,11 +32,15 @@ export const ForgotPassword = (): JSX.Element => {
 
     return (
         <Box>
-            <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">{t('resetPasswordTitle')}</Typography>
+            <Box sx={{ height: '92px', mt: '43.4px' }}>
+                <Typography variant="h4" sx={{ width: '356px' }}>
+                    {t('resetPasswordTitle')}
+                </Typography>
                 <Typography
+                    variant="body1"
                     sx={{
-                        mb: '40px'
+                        mb: '40px',
+                        color: NEUTRAL.default
                     }}>
                     {t('forgotPasswordSubtitle')}
                 </Typography>
@@ -55,6 +60,7 @@ export const ForgotPassword = (): JSX.Element => {
                                 setError('');
                             }
                         }}
+                        sx={{ width: '360px' }}
                         autoComplete="email"
                         fullWidth
                         type="email"
@@ -73,7 +79,8 @@ export const ForgotPassword = (): JSX.Element => {
                 variant="contained"
                 sx={{
                     mt: '40px',
-                    mb: '16px'
+                    mb: '16px',
+                    width: '360px'
                 }}>
                 {t('resetPassword')}
             </LoadingButton>

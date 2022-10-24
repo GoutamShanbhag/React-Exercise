@@ -8,7 +8,7 @@ import AppLogo from '../assets/Lejit.svg';
 export const AuthLayout = (): JSX.Element => {
     return (
         <Grid container sx={{ height: '100vh' }}>
-            <Grid item xs={12} sm={12} md={5}>
+            <Box sx={{ width: '37.5%' }}>
                 <Container maxWidth="xs">
                     <Box
                         sx={{
@@ -28,17 +28,15 @@ export const AuthLayout = (): JSX.Element => {
                         <Outlet />
                     </Box>
                 </Container>
-            </Grid>
-            <Grid
-                item
-                xs={false}
-                sm={4}
-                md={7}
+            </Box>
+            <Box
+                component="img"
+                src={image}
                 sx={{
-                    backgroundImage: `url(${image})`,
-                    backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center'
+                    backgroundRepeat: 'no-repeat',
+                    height: '100%',
+                    width: '62.5%'
                 }}
             />
         </Grid>

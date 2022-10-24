@@ -25,6 +25,8 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/config';
+import { customTypography } from '../theme/overrides/Typography';
+
 //-----------------------------------------------------
 
 const NavButtons = styled(Button)(({ theme }) => ({
@@ -85,7 +87,16 @@ export const Appbar = (): JSX.Element => {
                         mr: '12px'
                     }}
                 />
-                <Typography variant="body2">{item.languageName}</Typography>
+                <Typography
+                    sx={{
+                        ...customTypography.small2,
+                        color:
+                            item.languageCode === language
+                                ? theme.palette.primary.dark
+                                : NEUTRAL.default
+                    }}>
+                    {item.languageName}
+                </Typography>
             </MenuItem>
         );
     });
@@ -176,9 +187,9 @@ export const Appbar = (): JSX.Element => {
                                                 backgroundColor: PURPLE.lighter
                                             }}>
                                             <Typography
-                                                variant="body2"
                                                 sx={{
-                                                    color: PURPLE.dark
+                                                    color: PURPLE.dark,
+                                                    ...customTypography.subtitle4
                                                 }}>
                                                 {getInitials(firstName, lastName)}
                                             </Typography>
@@ -202,7 +213,7 @@ export const Appbar = (): JSX.Element => {
                                         alignContent: 'center',
                                         width: 'auto'
                                     }}>
-                                    <Typography variant="body2">
+                                    <Typography sx={{ ...customTypography.subtitle4 }}>
                                         {getName(firstName, lastName)}
                                     </Typography>
                                 </Box>

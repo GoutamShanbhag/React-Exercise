@@ -7,6 +7,7 @@ import { emailValidation } from '../Utils/Validation';
 import { MessageModal } from '../components/MessageModal';
 import { logIn } from '../Firebase/FirebaseFunctions';
 import { AuthError, AuthErrorCodes } from 'firebase/auth';
+import { customTypography } from '../theme/overrides/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import { getError } from '../components/ErrorHandling';
@@ -67,18 +68,24 @@ export const SignIn = (): JSX.Element => {
     };
 
     return (
-        <Box>
-            <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">{t('signIn')}</Typography>
+        <Box sx={{ justifyContent: 'center' }}>
+            <Box sx={{ height: '92px', mt: '43.4px' }}>
+                <Typography variant="h4">{t('signIn')}</Typography>
                 <Typography
+                    variant="body1"
                     sx={{
-                        mb: '40px'
+                        mb: '40px',
+                        color: NEUTRAL.default
                     }}>
                     {t('signInSubtitle')}
                 </Typography>
             </Box>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: '40px' }}>
-                <Grid container spacing={2}>
+                <Grid
+                    container
+                    rowSpacing={2}
+                    columnSpacing={'16px'}
+                    sx={{ width: '360px', height: '176px', mb: '40px' }}>
                     <Grid item xs={12} sm={12}>
                         <TextField
                             fullWidth
@@ -92,6 +99,7 @@ export const SignIn = (): JSX.Element => {
                                     setError('');
                                 }
                             }}
+                            sx={{ width: '360px' }}
                             id="email"
                             label={t('email')}
                             type="email"
@@ -102,17 +110,19 @@ export const SignIn = (): JSX.Element => {
                     </Grid>
                     <Grid item xs={12} sm={12}>
                         <PasswordField
+                            sx={{ width: '360px' }}
                             label={t('password')}
                             password={data.password}
                             setPassword={setPassword}
                         />
                     </Grid>
                     <Grid item xs sx={{ display: 'flex', justifyContent: 'right' }}>
-                        <Link
-                            href="/auth/forgot-password"
-                            variant="body2"
-                            sx={{ textDecoration: 'none' }}>
-                            <Typography variant="button">{t('forgotPassword')}</Typography>
+                        <Link href="/auth/forgot-password" sx={{ textDecoration: 'none' }}>
+                            <Typography
+                                variant="button"
+                                sx={{ color: theme.palette.primary.light }}>
+                                {t('forgotPassword')}
+                            </Typography>
                         </Link>
                     </Grid>
                 </Grid>
@@ -123,21 +133,22 @@ export const SignIn = (): JSX.Element => {
                     fullWidth
                     variant="contained"
                     sx={{
-                        mt: '40px',
-                        mb: '16px'
+                        mb: '16px',
+                        width: '360px'
                     }}>
                     {t('signIn')}
                 </LoadingButton>
                 <Grid container justifyContent="center">
                     <Grid item>
-                        <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
+                        <Typography sx={{ color: NEUTRAL.default, ...customTypography.small2 }}>
                             {t('noAccount')}
                             <Link
                                 variant="body2"
                                 href="/auth/register"
                                 sx={{
                                     color: theme.palette.primary.light,
-                                    textDecoration: 'none'
+                                    textDecoration: 'none',
+                                    ...customTypography.small2
                                 }}>
                                 {t('signUp')}
                             </Link>

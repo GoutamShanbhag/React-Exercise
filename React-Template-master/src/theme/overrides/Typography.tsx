@@ -30,11 +30,9 @@ export const TypographyStyle = (theme: Theme): Components => {
                 },
                 h4: {
                     fontWeight: 700,
-                    fontSize: '14px',
-                    lineHeight: '20px',
-                    letterSpacing: '0.1px',
-                    textTransform: 'capitalize',
-                    color: NEUTRAL.darker
+                    fontSize: '34px !important',
+                    lineHeight: '64px',
+                    letterSpacing: '0.25px'
                 },
 
                 h5: {
@@ -92,4 +90,101 @@ export const TypographyStyle = (theme: Theme): Components => {
             }
         }
     };
+};
+
+export const customTypography = {
+    h7: {
+        fontWeight: 700,
+        fontSize: '14px',
+        lineHeight: '24px'
+    },
+
+    subtitle3: {
+        fontWeight: 700,
+        fontSize: '16px',
+        lineHeight: '24px',
+        letterSpacing: '0.1px',
+        textTransform: 'capitalize'
+    },
+
+    subtitle4: {
+        fontWeight: 700,
+        fontSize: '14px',
+        lineHeight: '20px',
+        letterSpacing: '0.1px',
+        textTransform: 'capitalize'
+    },
+
+    subtitle5: {
+        fontWeight: 700,
+        fontSize: '12px',
+        lineHeight: '16px',
+        letterSpacing: '0.1px',
+        textTransform: 'capitalize'
+    },
+
+    body3: {
+        fontWeight: 400,
+        fontSize: '12px',
+        lineHeight: '20px',
+        letterSpacing: '0.3px'
+    },
+
+    small1: {
+        fontWeight: 700,
+        fontSize: '16px',
+        lineHeight: '28px',
+        letterSpacing: '0.3px'
+    },
+
+    small2: {
+        fontWeight: 700,
+        fontSize: '14px !important',
+        lineHeight: '24px',
+        letterSpacing: '0.3px'
+    },
+
+    small3: {
+        fontWeight: 700,
+        fontSize: '12px',
+        lineHeight: '20px',
+        letterSpacing: '0.3px'
+    },
+    small4: {
+        fontWeight: 700,
+        fontSize: '10px',
+        lineHeight: '16px',
+        letterSpacing: '0.3px'
+    },
+
+    button2: {
+        fontWeight: 700,
+        fontSize: '14px',
+        lineHeight: '20px',
+        letterSpacing: '0.5px',
+        textTransform: 'capitalize'
+    },
+
+    button3: {
+        fontWeight: 700,
+        fontSize: '12px',
+        lineHeight: '16px',
+        letterSpacing: '0.5px',
+        textTransform: 'capitalize'
+    },
+
+    caption2: {
+        fontWeight: 400,
+        fontSize: '10px',
+        lineHeight: '12px',
+        letterSpacing: '0.3px'
+    },
+
+    overline2: {
+        fontWeight: 400,
+        fontSize: '10px',
+        lineHeight: '12px',
+        letterSpacing: '1.5px',
+        textTransform: 'uppercase'
+    }
 };

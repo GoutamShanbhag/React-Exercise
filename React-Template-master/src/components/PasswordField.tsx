@@ -1,4 +1,4 @@
-import { TextField, InputAdornment, IconButton, useTheme } from '@mui/material';
+import { TextField, InputAdornment, IconButton, useTheme, SxProps } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -10,6 +10,7 @@ interface PasswordFieldProps {
     setPassword: Function;
     helperText?: string;
     required?: boolean;
+    sx?: SxProps;
 }
 
 const getHelperText = (helperText: string | undefined, password: string): string => {
@@ -29,10 +30,10 @@ export const PasswordField = ({
     required,
     password,
     setPassword,
-    helperText
+    helperText,
+    sx
 }: PasswordFieldProps): JSX.Element => {
     const theme = useTheme();
-
     const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
     const [iconVisibility, setIconVisibility] = useState<boolean>(false);
 
@@ -71,6 +72,7 @@ export const PasswordField = ({
                     </InputAdornment>
                 )
             }}
+            sx={{ ...sx }}
             required={required}
             fullWidth
             label={label}

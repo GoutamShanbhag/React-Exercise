@@ -9,6 +9,7 @@ import { AuthError } from 'firebase/auth';
 import { createNewUser } from '../Firebase/FirebaseFunctions';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getError } from '../components/ErrorHandling';
+import { customTypography } from '../theme/overrides/Typography';
 
 interface SignUpFormValues {
     firstName: string;
@@ -66,45 +67,53 @@ export const Register = (): JSX.Element => {
     };
 
     return (
-        <Box>
-            <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">{t('signUp')}</Typography>
+        <Box sx={{ justifyContent: 'center' }}>
+            <Box sx={{ height: '92px', mt: '43.4px' }}>
+                <Typography variant="h4">{t('signUp')}</Typography>
                 <Typography
-                    variant="h3"
+                    variant="body1"
                     sx={{
-                        mb: '40px'
+                        mb: '40px',
+                        color: NEUTRAL.default
                     }}>
                     {t('signUpSubtitle')}
                 </Typography>
             </Box>
 
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: '40px', width: '360px' }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+            <Box component="form" onSubmit={handleSubmit} sx={{ width: '360px', mt: '40px' }}>
+                <Grid
+                    container
+                    rowSpacing={2}
+                    columnSpacing={'16px'}
+                    sx={{ width: '360px', height: '176px', mb: '40px', p: 0 }}>
+                    <Grid
+                        item
+                        sx={{ display: 'flex', justifyContent: 'space-between', padding: '0px' }}>
                         <TextField
                             value={data.firstName}
                             onChange={(e): void => {
                                 setData({ ...data, firstName: e.target.value });
                             }}
                             id="firstName"
+                            sx={{ width: '172px', mr: '16px' }}
                             fullWidth
                             label={t('firstName')}
                             autoFocus
                         />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
                         <TextField
                             value={data.lastName}
                             onChange={(e): void => {
                                 setData({ ...data, lastName: e.target.value });
                             }}
                             fullWidth
+                            sx={{ width: '172px' }}
                             id="lastName"
                             label={t('lastName')}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
+                            sx={{ width: '360px' }}
                             value={data.email}
                             error={Boolean(error)}
                             onChange={async (e): Promise<void> => {
@@ -125,6 +134,7 @@ export const Register = (): JSX.Element => {
                     </Grid>
                     <Grid item xs={12}>
                         <PasswordField
+                            sx={{ width: '360px' }}
                             helperText={helperText}
                             label={t('password')}
                             password={data.password}
@@ -132,6 +142,7 @@ export const Register = (): JSX.Element => {
                         />
                     </Grid>
                 </Grid>
+
                 <LoadingButton
                     loading={loading}
                     disabled={Boolean(error) || checkForEmptyInputs(data) || Boolean(helperText)}
@@ -140,18 +151,22 @@ export const Register = (): JSX.Element => {
                     variant="contained"
                     sx={{
                         mt: '40px',
-                        mb: '16px'
+                        mb: '16px',
+                        width: '360px'
                     }}>
                     {t('signUp')}
                 </LoadingButton>
                 <Grid container justifyContent="center">
                     <Grid item>
-                        <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
+                        <Typography sx={{ color: NEUTRAL.default, ...customTypography.small2 }}>
                             {t('haveAnAccount')}
                             <Link
-                                variant="body2"
                                 href="/auth/login"
-                                sx={{ color: theme.palette.primary.light, textDecoration: 'none' }}>
+                                sx={{
+                                    color: theme.palette.primary.light,
+                                    textDecoration: 'none',
+                                    ...customTypography.small2
+                                }}>
                                 {t('signIn')}
                             </Link>
                         </Typography>

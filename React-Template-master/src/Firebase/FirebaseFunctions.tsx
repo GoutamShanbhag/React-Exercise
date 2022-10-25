@@ -5,7 +5,8 @@ import {
     sendEmailVerification,
     signInWithEmailAndPassword,
     UserCredential,
-    updatePassword
+    updatePassword,
+    sendPasswordResetEmail
 
 } from 'firebase/auth';
 
@@ -19,7 +20,7 @@ interface User {
 export const createNewUser = async (user: User): Promise<void> => {
     const { firstName, lastName, email, password } = user;
     const newUser = await createUserWithEmailAndPassword(auth, email, password);
-    await setDoc(doc(db, `users`, newUser.user.uid), {
+    await setDoc(doc(db, 'users', newUser.user.uid), {
         firstName,
         lastName,
         email
@@ -56,4 +57,8 @@ export const updateUserPassword = async (password: string): Promise<void> => {
     if (auth.currentUser) {
         await updatePassword(auth.currentUser, password);
     }
+};
+
+export const resetPasswordWithEmailLink = async (email: string): Promise<void> => {
+    await sendPasswordResetEmail(auth, email);
 };

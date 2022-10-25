@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
@@ -11,7 +11,6 @@ import { AuthError, AuthErrorCodes } from 'firebase/auth';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import { getError } from '../components/ErrorHandling';
-import { userContext } from '../context/Context';
 
 interface SignInFormValues {
     email: string;
@@ -37,7 +36,6 @@ export const SignIn = (): JSX.Element => {
         password: ''
     });
     const [error, setError] = useState('');
-    const user = useContext(userContext);
     const setPassword = (password: string): void => {
         setData({ ...data, password });
     };
@@ -49,7 +47,6 @@ export const SignIn = (): JSX.Element => {
         if (email && password) {
             try {
                 const userData = await logIn(email, password);
-
 
                 if (userData.user.emailVerified) {
                     setLoading(false);

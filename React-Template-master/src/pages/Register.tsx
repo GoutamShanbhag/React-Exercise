@@ -79,11 +79,7 @@ export const Register = (): JSX.Element => {
                 </Typography>
             </Box>
 
-            <Box
-                component="form"
-                noValidate
-                onSubmit={handleSubmit}
-                sx={{ mt: '40px', width: '360px' }}>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: '40px', width: '360px' }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField

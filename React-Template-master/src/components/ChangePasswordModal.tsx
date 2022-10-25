@@ -37,6 +37,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
 
     const setNewPassword = (newPassword: string): void => {
         setData({ ...data, newPassword });
+        if (newPassword === data.confirmNewPassword) setHelperText('');
     };
 
     const setConfirmNewPassword = (confirmNewPassword: string): void => {
@@ -109,7 +110,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                                 disabled={
                                     data.confirmNewPassword !== data.newPassword ||
                                     data.confirmNewPassword.length === 0 ||
-                                    data.newPassword.length === 0
+                                    data.confirmNewPassword.length < 6
                                 }
                                 loading={loading}
                                 fullWidth

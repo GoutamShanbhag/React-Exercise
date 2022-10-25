@@ -15,7 +15,7 @@ interface PasswordFieldProps {
 
 const getHelperText = (helperText: string | undefined, password: string): string => {
     if (helperText) {
-        if (password.length > 1 && password.length < 6) {
+        if (password.length > 0 && password.length < 6) {
             return t('invalidPassword');
         } else if (password.length >= 6) {
             return helperText;

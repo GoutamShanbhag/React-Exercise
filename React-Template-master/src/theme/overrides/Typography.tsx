@@ -36,7 +36,7 @@ export const TypographyStyle = (theme: Theme): Components => {
 
                 h5: {
                     fontWeight: 700,
-                    fontSize: '24px',
+                    fontSize: '24px !important',
                     lineHeight: '40px'
                 },
                 h6: {
@@ -46,14 +46,14 @@ export const TypographyStyle = (theme: Theme): Components => {
                 },
                 body1: {
                     fontWeight: 400,
-                    fontSize: '16px',
+                    fontSize: '16px !important',
                     lineHeight: '28px',
                     letterSpacing: '0.3px'
                 },
 
                 body2: {
                     fontWeight: 400,
-                    fontSize: '14px',
+                    fontSize: '14px !important',
                     lineHeight: '24px',
                     letterSpacing: '0.3px'
                 },
@@ -67,7 +67,7 @@ export const TypographyStyle = (theme: Theme): Components => {
 
                 subtitle1: {
                     fontWeight: 700,
-                    fontSize: '22px',
+                    fontSize: '22px !important',
                     lineHeight: '32px',
                     letterSpacing: '0.1px',
                     textTransform: 'capitalize'

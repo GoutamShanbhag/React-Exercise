@@ -7,38 +7,23 @@ import AppLogo from '../assets/Lejit.svg';
 
 export const AuthLayout = (): JSX.Element => {
     return (
-        <Grid container sx={{ height: '100vh' }}>
-            <Box sx={{ width: '37.5%' }}>
-                <Container maxWidth="xs">
-                    <Box
-                        sx={{
-                            marginTop: '83px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'left',
-                            textAlign: 'left'
-                        }}>
-                        <Logo
-                            sx={{
-                                width: '64px',
-                                height: '33.6px'
-                            }}
-                            src={AppLogo}
-                        />
-                        <Outlet />
-                    </Box>
-                </Container>
-            </Box>
+        <Box
+            sx={{
+                height: '100vh',
+                display: 'flex'
+            }}>
             <Box
-                component="img"
-                src={image}
                 sx={{
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    height: '100%',
-                    width: '62.5%'
-                }}
-            />
-        </Grid>
+                    width: '37.5%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column'
+                }}>
+                {/* <Box component="img" src={AppLogo} /> */}
+                <Outlet />
+            </Box>
+            <Box component="img" src={image} sx={{ height: '100vh' }} />
+        </Box>
     );
 };

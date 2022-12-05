@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Box, IconButton, Avatar, Typography, Button } from '@mui/material';
-import { PURPLE } from '../theme/palette';
+import { NEUTRAL, PURPLE } from '../theme/palette';
 import { ChangePasswordModal } from '../components/ChangePasswordModal';
 import { useTranslation } from 'react-i18next';
 import { userContext } from '../context/Context';
 import { getInitials, getName } from '../components/utils';
+import { AvatarIcon } from '../components/AvatarIcon';
 
 export const ChangePassword = (): JSX.Element => {
     const user = useContext(userContext);
@@ -17,15 +18,15 @@ export const ChangePassword = (): JSX.Element => {
     }
     const { firstName, lastName, email } = user;
     return (
-        <Box>
+        <>
             <Box
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    mt: '140px',
-                    width: '90%',
-                    ml: '80px'
+                    mt: '40px',
+                    mx: 'auto',
+                    width: '89%'
                 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton disabled={true} sx={{ color: PURPLE.lighter, mr: '16px' }}>
@@ -37,10 +38,9 @@ export const ChangePassword = (): JSX.Element => {
                                 backgroundColor: PURPLE.lighter
                             }}>
                             <Typography
-                                variant="h1"
+                                variant="subtitle1"
                                 sx={{
-                                    color: PURPLE.dark,
-                                    fontSize: '32px'
+                                    color: PURPLE.dark
                                 }}>
                                 {getInitials(firstName, lastName)}
                             </Typography>
@@ -48,7 +48,9 @@ export const ChangePassword = (): JSX.Element => {
                     </IconButton>
                     <Box>
                         <Typography variant="h5">{getName(firstName, lastName)}</Typography>
-                        <Typography variant="h3">{email}</Typography>
+                        <Typography variant="body1" sx={{ color: NEUTRAL.default }}>
+                            {email}
+                        </Typography>
                     </Box>
                 </Box>
                 <Box>
@@ -61,6 +63,6 @@ export const ChangePassword = (): JSX.Element => {
                 </Box>
             </Box>
             <ChangePasswordModal open={open} setOpen={setOpen} />
-        </Box>
+        </>
     );
 };

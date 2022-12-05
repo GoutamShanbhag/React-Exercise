@@ -11,7 +11,8 @@ export const InputBase = (theme: Theme): Components => {
                     fontSize: '14px',
                     lineHeight: '24px',
                     fontWeight: 400,
-                    letterSpacing: '0.3px'
+                    letterSpacing: '0.3px',
+                    padding: '0px'
                 }
             }
         },
@@ -35,6 +36,7 @@ export const InputBase = (theme: Theme): Components => {
         MuiTextField: {
             styleOverrides: {
                 root: {
+                    padding: '0px',
                     '& label': {
                         color: NEUTRAL.dark,
                         fontWeight: 400,

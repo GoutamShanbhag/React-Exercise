@@ -73,13 +73,15 @@ export const NEUTRAL = {
     dark: '#8E90A6',
     light: '#EBEBF0',
     main: '#28293D',
-    contrastText: '#fff'
+    contrastText: '#fff',
+    appBar: '#E3E4EB'
 };
 
 export const PURPLE = {
     lighter: '#FFE5FF',
     dark: '#6600CC'
 };
+
 export const palette: PaletteOptions = {
     common: { black: '#000', white: '#fff' },
     primary: { ...PRIMARY },

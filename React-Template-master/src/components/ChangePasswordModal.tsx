@@ -71,25 +71,30 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                     <Typography
                         variant="subtitle1"
                         sx={{
-                            color: NEUTRAL.main
+                            color: NEUTRAL.main,
+                            textAlign: 'center'
                         }}>
                         {t('changePasswordTitle')}
                     </Typography>
                     <Typography
-                        variant="subtitle2"
+                        variant="body2"
                         sx={{
                             mt: '6px',
-                            boxSizing: 'content-box'
+                            textAlign: 'center',
+                            color: NEUTRAL.default
                         }}>
                         {t('changePasswordSubtitle')}
                     </Typography>
 
                     <Grid container spacing={2} sx={{ textAlign: 'center' }}>
-                        <Typography variant="h6" sx={{ mt: '24px', ml: '24px' }}>
+                        <Typography
+                            variant="caption"
+                            sx={{ mt: '24px', ml: '24px', color: NEUTRAL.dark }}>
                             {t('requiredField')}
                         </Typography>
                         <Grid item xs={12} sm={12}>
                             <PasswordField
+                                helperText={helperText}
                                 password={data.newPassword}
                                 setPassword={setNewPassword}
                                 label={t('newPassword')}
@@ -98,7 +103,6 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <PasswordField
-                                helperText={helperText}
                                 password={data.confirmNewPassword}
                                 setPassword={setConfirmNewPassword}
                                 label={t('confirmPassword')}

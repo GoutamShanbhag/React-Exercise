@@ -2,30 +2,32 @@ import React, { useState, useContext } from 'react';
 import { Logo } from '../components/Logo';
 import { useTranslation } from 'react-i18next';
 import { changeLanguage, SupportedLanguage } from '../i18n/config';
-import { NEUTRAL, PURPLE } from '../theme/palette';
+import { NEUTRAL } from '../theme/palette';
 import { userContext } from '../context/Context';
-import { getInitials, getName } from './utils';
+import { getName } from './utils';
 import AppLogo from '../assets/Lejit.svg';
 import france from '../france.png';
 import english from '../english.png';
+import arrowUp from '../VectorUp.png';
+
 import {
     AppBar,
     Box,
-    Toolbar,
     Typography,
     Button,
     IconButton,
     Avatar,
-    Select,
     styled,
     MenuItem,
     useTheme,
-    Menu
+    Menu,
+    SxProps
 } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/config';
 import { customTypography } from '../theme/overrides/Typography';
+import { AvatarIcon } from './AvatarIcon';
 
 //-----------------------------------------------------
 
@@ -38,6 +40,7 @@ const NavButtons = styled(Button)(({ theme }) => ({
     whiteSpace: 'nowrap',
     color: theme.palette.primary.dark
 }));
+
 const languageItems: {
     languageName: string;
     image: string;
@@ -47,7 +50,7 @@ const languageItems: {
     { languageName: 'France', image: france, languageCode: 'fr' }
 ];
 
-const navbarTitles: { title: string; path: string }[] = [
+const navbarTitles: { title: string; path: string; sx?: SxProps }[] = [
     { title: 'dashboard', path: '/dashboard' },
     { title: 'users', path: '/dashboard/users' },
     { title: 'myProfile', path: '/dashboard/my-profile' }
@@ -62,6 +65,7 @@ export const Appbar = (): JSX.Element => {
     const { t } = useTranslation();
     const theme = useTheme();
     const [openMenu, setOpenMenu] = useState<boolean>(false);
+    const [openLanguageMenu, setOpenLanguage] = useState(false);
     const navigate = useNavigate();
 
     const allLanguages = languageItems.map((item): JSX.Element => {
@@ -71,6 +75,7 @@ export const Appbar = (): JSX.Element => {
                 onClick={(): void => {
                     setLanguage(item.languageCode);
                     changeLanguage(item.languageCode);
+                    setOpenLanguage(false);
                 }}
                 sx={{
                     display: 'flex',
@@ -102,149 +107,146 @@ export const Appbar = (): JSX.Element => {
     });
     const navItems = navbarTitles.map((item): JSX.Element => {
         return (
-            <Link
-                onClick={(): void => setActiveItem(item.path)}
-                key={item.title}
-                to={item.path}
-                style={{
-                    textDecoration: 'none',
-                    WebkitTextFillColor:
-                        item.path === activeItem ? theme.palette.primary.dark : NEUTRAL.lighter
-                }}>
-                <NavButtons>{t(item.title)}</NavButtons>
-            </Link>
+            <Box key={item.title} sx={{ ...item.sx }}>
+                <Link
+                    onClick={(): void => {
+                        setActiveItem(item.path);
+                    }}
+                    to={item.path}
+                    style={{
+                        textDecoration: 'none',
+                        WebkitTextFillColor:
+                            item.path === activeItem ? theme.palette.primary.dark : NEUTRAL.lighter
+                    }}>
+                    <NavButtons>{t(item.title)}</NavButtons>
+                </Link>
+            </Box>
         );
     });
 
     if (!user) {
-        return <React.Fragment></React.Fragment>;
+        return <></>;
     }
     const { firstName, lastName } = user;
-
+    const toggleMenu = (): void => {
+        setOpenMenu(!openMenu);
+    };
     return (
-        <Box>
-            <AppBar
-                component="nav"
+        <Box
+            sx={{
+                display: 'flex',
+                m: 'auto',
+                justifyContent: 'space-between',
+                width: '89%',
+                height: '100px'
+            }}>
+            <Box
+                onClick={(): void => {
+                    setActiveItem('/dashboard');
+                    navigate('/dashboard');
+                }}
+                sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                <Logo src={AppLogo} sx={{ width: '64px', height: '33.6px' }} />
+            </Box>
+            <Box
                 sx={{
                     display: 'flex',
-                    backgroundColor: theme.palette.common.white,
-                    width: '100%'
+                    minWidth: '766px',
+                    justifyContent: 'space-between',
+                    gap: '120px'
                 }}>
-                <Toolbar sx={{ justifyContent: 'space-between' }}>
-                    <Box
-                        component="div"
-                        onClick={(): void => {
-                            setActiveItem('/dashboard');
-                            navigate('/dashboard');
-                        }}
-                        sx={{
-                            ml: '80px',
-                            mt: '33px',
-                            mb: '33.4px',
-                            width: '30%'
-                        }}>
-                        <Logo
-                            sx={{
-                                width: '64px',
-                                height: '33.6px'
-                            }}
-                            src={AppLogo}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: '64px'
+                    }}>
+                    {navItems}
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '24px'
+                    }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <AvatarIcon
+                            firstName={firstName}
+                            id={'iconbutton'}
+                            lastName={lastName}
+                            disabled={false}
+                            onClick={setOpenMenu}
                         />
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            minWidth: '400px'
-                        }}>
-                        {navItems}
-                    </Box>
-
-                    <Box
-                        sx={{
-                            width: '25%',
-                            mr: '86px',
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                width: '60%',
-                                alignItems: 'center',
-                                justifyContent: 'space-around'
-                            }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Box>
-                                    <IconButton
-                                        id="iconbutton"
-                                        onClick={(): void => setOpenMenu(!openMenu)}
-                                        sx={{ color: PURPLE.lighter }}>
-                                        <Avatar
-                                            sx={{
-                                                width: '48px',
-                                                height: '48px',
-                                                backgroundColor: PURPLE.lighter
-                                            }}>
-                                            <Typography
-                                                sx={{
-                                                    color: PURPLE.dark,
-                                                    ...customTypography.subtitle4
-                                                }}>
-                                                {getInitials(firstName, lastName)}
-                                            </Typography>
-                                        </Avatar>
-                                        <Menu
-                                            id="basic-menu"
-                                            anchorEl={document.getElementById('iconbutton')}
-                                            open={openMenu}>
-                                            <MenuItem
-                                                onClick={(): void => {
-                                                    signOut(auth);
-                                                    setOpenMenu(false);
-                                                }}>
-                                                {t('signOut')}
-                                            </MenuItem>
-                                        </Menu>
-                                    </IconButton>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        alignContent: 'center',
-                                        width: 'auto'
-                                    }}>
-                                    <Typography sx={{ ...customTypography.subtitle4 }}>
-                                        {getName(firstName, lastName)}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                width: '0px',
-                                height: '24px',
-                                border: `1px solid ${NEUTRAL.dark}`,
-                                mr: '24px'
-                            }}
-                        />
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Box component="img" src={language === 'en' ? english : france} />
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    color: NEUTRAL.default,
-                                    ml: '12px'
+                        <Menu
+                            onClose={(): void => setOpenMenu(false)}
+                            id="basic-menu"
+                            anchorEl={document.getElementById('iconbutton')}
+                            open={openMenu}>
+                            <MenuItem
+                                onClick={(): void => {
+                                    signOut(auth);
+                                    setOpenMenu(false);
                                 }}>
-                                {language === 'en' ? 'EN' : 'FR'}
-                            </Typography>
-
-                            <Select variant="standard" disableUnderline>
-                                {allLanguages}
-                            </Select>
-                        </Box>
+                                {t('signOut')}
+                            </MenuItem>
+                        </Menu>
+                        <Typography
+                            sx={{
+                                color: NEUTRAL.default,
+                                ...customTypography.subtitle4,
+                                height: '20px'
+                            }}>
+                            {getName(firstName, lastName)}
+                        </Typography>
                     </Box>
-                </Toolbar>
-            </AppBar>
+                    <Box
+                        sx={{
+                            width: '0px',
+                            height: '24px',
+                            border: `1px solid ${NEUTRAL.dark}`
+                        }}
+                    />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            width: '100px',
+                            justifyContent: 'space-between'
+                        }}>
+                        <Box component="img" src={language === 'en' ? english : france} />
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: NEUTRAL.default
+                            }}>
+                            {language === 'en' ? 'EN' : 'FR'}
+                        </Typography>
+                        <Box
+                            id="arrow"
+                            component="img"
+                            src={arrowUp}
+                            onClick={(): void => {
+                                setOpenLanguage(true);
+                            }}
+                            sx={{
+                                transform: `${openLanguageMenu ? 'rotate(0deg)' : 'rotate(180deg)'}`
+                            }}
+                        />
+                        <Menu
+                            onClose={(): void => {
+                                setOpenLanguage(false);
+                            }}
+                            sx={{ mt: '20px' }}
+                            anchorEl={document.getElementById('arrow')}
+                            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            transitionDuration="auto"
+                            open={openLanguageMenu}>
+                            {allLanguages}
+                        </Menu>
+                    </Box>
+                </Box>
+            </Box>
         </Box>
     );
 };

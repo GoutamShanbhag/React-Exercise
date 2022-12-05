@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -8,6 +8,7 @@ import { getError } from '../components/ErrorHandling';
 import { MessageModal } from '../components/MessageModal';
 import { resetPasswordWithEmailLink } from '../Firebase/FirebaseFunctions';
 import { NEUTRAL } from '../theme/palette';
+import { PageTitle } from '../components/PageTitle';
 
 export const ForgotPassword = (): JSX.Element => {
     const { t } = useTranslation();
@@ -32,22 +33,9 @@ export const ForgotPassword = (): JSX.Element => {
 
     return (
         <Box>
-            <Box sx={{ height: '92px', mt: '43.4px' }}>
-                <Typography variant="h4" sx={{ width: '356px' }}>
-                    {t('resetPasswordTitle')}
-                </Typography>
-                <Typography
-                    variant="body1"
-                    sx={{
-                        mb: '40px',
-                        color: NEUTRAL.default
-                    }}>
-                    {t('forgotPasswordSubtitle')}
-                </Typography>
-            </Box>
-
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} sx={{ mt: '40px' }}>
+            <PageTitle title={t('resetPasswordTitle')} subtitle={t('forgotPasswordSubtitle')} />
+            <Box>
+                <Box sx={{ mt: '40px' }}>
                     <TextField
                         error={Boolean(error)}
                         value={email}
@@ -69,8 +57,8 @@ export const ForgotPassword = (): JSX.Element => {
                         autoFocus
                         helperText={Boolean(error) && error}
                     />
-                </Grid>
-            </Grid>
+                </Box>
+            </Box>
             <LoadingButton
                 onClick={onSubmit}
                 loading={loading}

@@ -8,6 +8,7 @@ import { MessageModal } from '../components/MessageModal';
 import { logIn } from '../Firebase/FirebaseFunctions';
 import { AuthError, AuthErrorCodes } from 'firebase/auth';
 import { customTypography } from '../theme/overrides/Typography';
+
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import { getError } from '../components/ErrorHandling';
@@ -48,6 +49,7 @@ export const SignIn = (): JSX.Element => {
         if (email && password) {
             try {
                 const userData = await logIn(email, password);
+
                 if (userData.user.emailVerified) {
                     setLoading(false);
                     navigate('/dashboard');

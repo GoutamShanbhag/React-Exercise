@@ -11,6 +11,7 @@ interface PasswordFieldProps {
     helperText?: string;
     required?: boolean;
     sx?: SxProps;
+
 }
 
 const getHelperText = (helperText: string | undefined, password: string): string => {
@@ -81,6 +82,7 @@ export const PasswordField = ({
             id="password"
             autoComplete="new-password"
             helperText={getHelperText(helperText, password)}
+
         />
     );
 };

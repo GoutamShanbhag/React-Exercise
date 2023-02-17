@@ -30,6 +30,7 @@ export const TypographyStyle = (theme: Theme): Components => {
                 h4: {
                     fontWeight: 700,
                     fontSize: '34px !important',
+
                     lineHeight: '64px',
                     letterSpacing: '0.25px'
                 },
@@ -67,7 +68,7 @@ export const TypographyStyle = (theme: Theme): Components => {
 
                 subtitle1: {
                     fontWeight: 700,
-                    fontSize: '22px !important',
+                    fontSize: '22px',
                     lineHeight: '32px',
                     letterSpacing: '0.1px',
                     textTransform: 'capitalize'
@@ -98,6 +99,7 @@ export const TypographyStyle = (theme: Theme): Components => {
 };
 
 export const customTypography = {
+
     h7: {
         fontWeight: 700,
         fontSize: '14px',

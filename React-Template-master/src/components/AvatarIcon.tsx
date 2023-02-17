@@ -1,29 +1,43 @@
 import React, { useContext } from 'react';
-import { PURPLE } from '../theme/palette';
 import { IconButton, Avatar, Typography, SxProps } from '@mui/material';
 import { getInitials } from './utils';
+import { customTypography } from '../theme/overrides/Typography';
+import { PURPLE } from '../theme/palette';
 
 interface AvatarIconProps {
+    id?: string;
     firstName: string;
     lastName: string;
     sx?: SxProps;
     disabled?: boolean;
+    textFontSize?: string;
+    onClick?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AvatarIcon = ({ firstName, lastName, sx, disabled }: AvatarIconProps): JSX.Element => {
+export const AvatarIcon = ({
+    firstName,
+    lastName,
+    sx,
+    disabled,
+    id,
+    textFontSize,
+    onClick
+}: AvatarIconProps): JSX.Element => {
     return (
-        <IconButton disabled={disabled} sx={{ color: PURPLE.lighter, mr: '16px' }}>
-            <Avatar
-                sx={{
-                    ...sx,
-                    textAlign: 'center',
-                    backgroundColor: PURPLE.lighter
-                }}>
+        <IconButton
+            id={id}
+            disabled={disabled}
+            sx={{ color: PURPLE.lighter }}
+            onClick={(): void => {
+                if (onClick) {
+                    onClick(true);
+                }
+            }}>
+            <Avatar sx={{ ...sx, textAlign: 'center', backgroundColor: PURPLE.lighter }}>
                 <Typography
-                    variant="h1"
                     sx={{
-                        color: PURPLE.dark,
-                        fontSize: '32px'
+                        ...customTypography.subtitle4,
+                        color: PURPLE.dark
                     }}>
                     {getInitials(firstName, lastName)}
                 </Typography>

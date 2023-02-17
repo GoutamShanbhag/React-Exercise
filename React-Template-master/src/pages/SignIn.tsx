@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Link, Box, Grid, Typography, useTheme } from '@mui/material';
+import { TextField, Link, Box, Typography, useTheme } from '@mui/material';
 import { PasswordField } from '../components/PasswordField';
 import { NEUTRAL } from '../theme/palette';
 import { useTranslation } from 'react-i18next';
@@ -7,10 +7,12 @@ import { emailValidation } from '../Utils/Validation';
 import { MessageModal } from '../components/MessageModal';
 import { logIn } from '../Firebase/FirebaseFunctions';
 import { AuthError, AuthErrorCodes } from 'firebase/auth';
+import { customTypography } from '../theme/overrides/Typography';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import { getError } from '../components/ErrorHandling';
+import { PageTitle } from '../components/PageTitle';
 
 interface SignInFormValues {
     email: string;
@@ -69,83 +71,74 @@ export const SignIn = (): JSX.Element => {
     };
 
     return (
-        <Box>
-            <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">{t('signIn')}</Typography>
-                <Typography
-                    sx={{
-                        mb: '40px'
-                    }}>
-                    {t('signInSubtitle')}
-                </Typography>
-            </Box>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: '40px' }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12}>
-                        <TextField
-                            fullWidth
-                            value={data.email}
-                            onChange={async (e): Promise<void> => {
-                                setData({ ...data, email: e.target.value });
-                                const isValid = await emailValidation(e.target.value);
-                                if (!isValid) {
-                                    setError(t('invalidEmail'));
-                                } else {
-                                    setError('');
-                                }
-                            }}
-                            id="email"
-                            label={t('email')}
-                            type="email"
-                            autoFocus
-                            error={Boolean(error)}
-                            helperText={Boolean(error) && error}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <PasswordField
-                            label={t('password')}
-                            password={data.password}
-                            setPassword={setPassword}
-                        />
-                    </Grid>
-                    <Grid item xs sx={{ display: 'flex', justifyContent: 'right' }}>
-                        <Link
-                            href="/auth/forgot-password"
-                            variant="body2"
-                            sx={{ textDecoration: 'none' }}>
-                            <Typography variant="button">{t('forgotPassword')}</Typography>
-                        </Link>
-                    </Grid>
-                </Grid>
-                <LoadingButton
-                    disabled={Boolean(error) || checkForEmptyInputs(data)}
-                    loading={loading}
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                        mt: '40px',
-                        mb: '16px'
-                    }}>
-                    {t('signIn')}
-                </LoadingButton>
-                <Grid container justifyContent="center">
-                    <Grid item>
-                        <Typography variant="body2" sx={{ color: NEUTRAL.default }}>
+        <Box sx={{ justifyContent: 'center' }}>
+            <PageTitle title={t('signIn')} subtitle={t('signInSubtitle')} />
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: '40px' }}>
+                <Box sx={{ width: '360px' }}>
+                    <TextField
+                        fullWidth
+                        value={data.email}
+                        onChange={async (e): Promise<void> => {
+                            setData({ ...data, email: e.target.value });
+                            const isValid = await emailValidation(e.target.value);
+                            if (!isValid) {
+                                setError(t('invalidEmail'));
+                            } else {
+                                setError('');
+                            }
+                        }}
+                        sx={{ width: '360px' }}
+                        id="email"
+                        label={t('email')}
+                        type="email"
+                        autoFocus
+                        error={Boolean(error)}
+                        helperText={Boolean(error) && error}
+                    />
+                    <PasswordField
+                        sx={{ width: '360px', mt: '16px' }}
+                        label={t('password')}
+                        password={data.password}
+                        setPassword={setPassword}
+                    />
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'right', mt: '8px' }}>
+                    <Link href="/auth/forgot-password" sx={{ textDecoration: 'none' }}>
+                        <Typography variant="button" sx={{ color: theme.palette.primary.light }}>
+                            {t('forgotPassword')}
+                        </Typography>
+                    </Link>
+                </Box>
+                <Box sx={{ width: '360px', p: 0, mt: '40px', textAlign: 'center' }}>
+                    <LoadingButton
+                        disabled={Boolean(error) || checkForEmptyInputs(data)}
+                        loading={loading}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{
+                            mb: '16px',
+                            width: '360px'
+                        }}>
+                        {t('signIn')}
+                    </LoadingButton>
+
+                    <Box>
+                        <Typography sx={{ color: NEUTRAL.default, ...customTypography.small2 }}>
                             {t('noAccount')}
                             <Link
                                 variant="body2"
                                 href="/auth/register"
                                 sx={{
                                     color: theme.palette.primary.light,
-                                    textDecoration: 'none'
+                                    textDecoration: 'none',
+                                    ...customTypography.small2
                                 }}>
                                 {t('signUp')}
                             </Link>
                         </Typography>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </Box>
             <MessageModal
                 open={open}

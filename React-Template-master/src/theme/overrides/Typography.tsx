@@ -29,14 +29,15 @@ export const TypographyStyle = (theme: Theme): Components => {
                 },
                 h4: {
                     fontWeight: 700,
-                    fontSize: '34px',
+                    fontSize: '34px !important',
+
                     lineHeight: '64px',
                     letterSpacing: '0.25px'
                 },
 
                 h5: {
                     fontWeight: 700,
-                    fontSize: '24px',
+                    fontSize: '24px !important',
                     lineHeight: '40px'
                 },
                 h6: {
@@ -46,14 +47,14 @@ export const TypographyStyle = (theme: Theme): Components => {
                 },
                 body1: {
                     fontWeight: 400,
-                    fontSize: '16px',
+                    fontSize: '16px !important',
                     lineHeight: '28px',
                     letterSpacing: '0.3px'
                 },
 
                 body2: {
                     fontWeight: 400,
-                    fontSize: '14px',
+                    fontSize: '14px !important',
                     lineHeight: '24px',
                     letterSpacing: '0.3px'
                 },
@@ -97,7 +98,8 @@ export const TypographyStyle = (theme: Theme): Components => {
     };
 };
 
-export const cutomTypography = {
+export const customTypography = {
+
     h7: {
         fontWeight: 700,
         fontSize: '14px',
@@ -144,7 +146,7 @@ export const cutomTypography = {
 
     small2: {
         fontWeight: 700,
-        fontSize: '14px',
+        fontSize: '14px !important',
         lineHeight: '24px',
         letterSpacing: '0.3px'
     },

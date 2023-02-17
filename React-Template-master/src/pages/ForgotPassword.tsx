@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -8,6 +8,8 @@ import { AuthError } from 'firebase/auth';
 import { getError } from '../components/ErrorHandling';
 import { MessageModal } from '../components/MessageModal';
 import { resetPasswordWithEmailLink } from '../Firebase/FirebaseFunctions';
+import { NEUTRAL } from '../theme/palette';
+import { PageTitle } from '../components/PageTitle';
 
 export const ForgotPassword = (): JSX.Element => {
     const { t } = useTranslation();
@@ -32,18 +34,9 @@ export const ForgotPassword = (): JSX.Element => {
 
     return (
         <Box>
-            <Box sx={{ height: '130px', mt: '77px' }}>
-                <Typography variant="h1">{t('resetPasswordTitle')}</Typography>
-                <Typography
-                    sx={{
-                        mb: '40px'
-                    }}>
-                    {t('forgotPasswordSubtitle')}
-                </Typography>
-            </Box>
-
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} sx={{ mt: '40px' }}>
+            <PageTitle title={t('resetPasswordTitle')} subtitle={t('forgotPasswordSubtitle')} />
+            <Box>
+                <Box sx={{ mt: '40px' }}>
                     <TextField
                         error={Boolean(error)}
                         value={email}
@@ -56,6 +49,7 @@ export const ForgotPassword = (): JSX.Element => {
                                 setError('');
                             }
                         }}
+                        sx={{ width: '360px' }}
                         autoComplete="email"
                         fullWidth
                         type="email"
@@ -64,8 +58,8 @@ export const ForgotPassword = (): JSX.Element => {
                         autoFocus
                         helperText={Boolean(error) && error}
                     />
-                </Grid>
-            </Grid>
+                </Box>
+            </Box>
             <LoadingButton
                 onClick={onSubmit}
                 loading={loading}
@@ -74,7 +68,8 @@ export const ForgotPassword = (): JSX.Element => {
                 variant="contained"
                 sx={{
                     mt: '40px',
-                    mb: '16px'
+                    mb: '16px',
+                    width: '360px'
                 }}>
                 {t('resetPassword')}
             </LoadingButton>
